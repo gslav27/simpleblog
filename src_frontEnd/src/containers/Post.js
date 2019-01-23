@@ -31,7 +31,7 @@ class Post extends Component {
 
   handleNewComment(...commentBody) {
     const { params } = this.props.match;
-    this.props.addComment(...commentBody, params.postId);
+    this.props.addComment(...commentBody, Number(params.postId));
   }
 
   render() {
