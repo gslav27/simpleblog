@@ -29,8 +29,9 @@ class Post extends Component {
     );
   }
 
-  handleNewComment(...params) {
-    this.props.addComment(...params, this.props.currentPost.id);
+  handleNewComment(...commentBody) {
+    const { params } = this.props.match;
+    this.props.addComment(...commentBody, params.postId);
   }
 
   render() {
@@ -47,24 +48,11 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-  currentPost: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    body: PropTypes.string,
-    author: PropTypes.string,
-    date: PropTypes.string,
-  }).isRequired,
-  currentPostComments: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      postId: PropTypes.number,
-      body: PropTypes.string,
-      author: PropTypes.string,
-      date: PropTypes.string,
-    }),
-  ).isRequired,
-  waitCurrentPostFetching: PropTypes.PropTypes.bool.isRequired,
+  currentPost: PropTypes.object.isRequired,
+  currentPostComments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  waitCurrentPostFetching: PropTypes.bool.isRequired,
   waitCurrentPostCommentsFetching: PropTypes.bool.isRequired,
+  match: PropTypes.shape({ params: PropTypes.shape({ postId: PropTypes.string }) }).isRequired,
   fetchCurrentPostData: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
 };

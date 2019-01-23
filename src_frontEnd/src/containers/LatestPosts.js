@@ -36,16 +36,8 @@ class LatestPosts extends Component {
 }
 
 LatestPosts.propTypes = {
-  latestPosts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      body: PropTypes.string,
-      description: PropTypes.string,
-      author: PropTypes.string,
-      date: PropTypes.string,
-    }),
-  ).isRequired,
+  latestPosts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   waitLatestPostFetching: PropTypes.bool.isRequired,
   fetchLatestPosts: PropTypes.func.isRequired,
 };

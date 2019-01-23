@@ -42,13 +42,12 @@ PostLayout.propTypes = {
   waitCurrentPostFetching: PropTypes.bool.isRequired,
   waitCurrentPostCommentsFetching: PropTypes.bool.isRequired,
   post: PropTypes.shape({
-    id: PropTypes.number,
     title: PropTypes.string,
     body: PropTypes.string,
     author: PropTypes.string,
     date: PropTypes.string,
-  }),
-  comments: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAddNewComment: PropTypes.func.isRequired,
 };
 
