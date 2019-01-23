@@ -1,42 +1,39 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import mainTheme from '../../../utilities/themes';
 
-const Section = styled.section`
-  h3 {
-    text-transform: lowercase;
-    color: ${({ theme }) => theme.color};
-    background-color: lightgrey;
-    padding: 0.7em 0.2em;
-    margin-top: 0;
-    margin-bottom: 0.2em;
-    border-top: 1px solid ${({ theme }) => theme.color};
-  }
-  div {
-    & > p {
-      font-size: 0.9em;
-      margin: 0 0 0.8em;
-      color: seagreen;
-    }
-    & > span {
-      display: inline-block;
-      font-size: 0.7em;
-      color: #777;
-    }
-  }
+
+const Header = styled.h3`
+  text-transform: lowercase;
+  color: ${({ theme }) => theme.color};
+  background-color: lightgrey;
+  padding: 0.7em 0.2em;
+  margin-top: 0;
+  margin-bottom: 0.2em;
+  border-top: 1px solid ${({ theme }) => theme.color};
+`;
+
+const CommentDetails = styled.span`
+  font-size: 0.8em;
+  color: #777;
+`;
+
+const CommentText = styled.p`
+  font-size: 0.9em;
+  margin: 0 0 0.8em;
+  color: seagreen;
 `;
 
 const Comments = ({ comments }) => (
-  <Section theme={mainTheme}>
-    <h3>comments</h3>
+  <Fragment>
+    <Header>comments</Header>
     {comments.map(comment => (
       <div key={comment.id}>
-        <span>{comment.author} left a comment ({comment.date})</span>
-        <p>{comment.body}</p>
+        <CommentDetails>{comment.author} left a comment ({comment.date})</CommentDetails>
+        <CommentText>{comment.body}</CommentText>
       </div>
     ))}
-  </Section>
+  </Fragment>
 );
 
 

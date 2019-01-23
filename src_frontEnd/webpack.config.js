@@ -12,17 +12,6 @@ module.exports = {
         loader: 'babel-loader',
         options: { presets: ['@babel/env'] },
       },
-      {
-        test: /\.scss$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }],
-      },
-      {
-        test: /\.svg/,
-        use: {
-          loader: 'svg-url-loader',
-          options: { noquotes: true },
-        },
-      },
     ],
   },
   resolve: { extensions: ['*', '.js', '.jsx'] },

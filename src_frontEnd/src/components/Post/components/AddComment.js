@@ -1,36 +1,41 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import mainTheme from '../../../utilities/themes';
 
-const Form = styled.form`
-  div {
-    display: flex;
-    flex-direction: column;
-    margin-top: 0.5em;
-  }
-  div label, button {
-    color: ${({ theme }) => theme.color};  
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  button {
-    margin: 0.5em 0;
-    padding: 1em;
-    border-radius: 3px;
-    border: 2px solid ${({ theme }) => theme.color};
-    background-color: white;
-    &:hover {
-      cursor: pointer;
-    };
-    &:active {
-      background: #eee;
-    };
-  }
-  textarea, input {
-    font-size: 1em;
-  }
+
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
 `;
+
+const Label = styled.label`
+  ${({ theme }) => theme.boldUppercaseMixin(theme.color)}
+`;
+
+const TextArea = styled.textarea`
+  ${({ theme }) => theme.inputTextMixin}
+`;
+
+const Input = styled.input`
+  ${({ theme }) => theme.inputTextMixin}
+`;
+
+const Button = styled.button`
+  margin: 0.5em 0;
+  padding: 1em;
+  border-radius: 3px;
+  border: 2px solid ${({ theme }) => theme.color};
+  background-color: white;
+  ${({ theme }) => theme.boldUppercaseMixin(theme.color)}
+  &:hover {
+    cursor: pointer;
+  };
+  &:active {
+    background: #eee;
+  };
+`;
+
 
 class AddComment extends PureComponent {
   constructor(props) {
@@ -71,10 +76,10 @@ class AddComment extends PureComponent {
   render() {
     const { text, author } = this.state;
     return (
-      <Form onSubmit={this.handleSubmit} theme={mainTheme}>
-        <div>
-          <label htmlFor='newCommentText'>Add comment text:</label>
-          <textarea
+      <form onSubmit={this.handleSubmit}>
+        <InputGroup>
+          <Label htmlFor='newCommentText'>Add comment text:</Label>
+          <TextArea
             id='newCommentText'
             name='commentText'
             rows='3'
@@ -83,24 +88,24 @@ class AddComment extends PureComponent {
             value={text}
             onChange={this.handleTextChange}
           />
-        </div>
-        <div>
-          <label htmlFor='newCommentAuthor'>Name:</label>
-          <input
+        </InputGroup>
+        <InputGroup>
+          <Label htmlFor='newCommentAuthor'>Name:</Label>
+          <Input
             id='newCommentAuthor'
             type='text'
             value={author}
             onChange={this.handleAuthorNameChange}
             placeholder='your name...'
           />
-        </div>
-        <button
+        </InputGroup>
+        <Button
           type='submit'
           name='submitNewComment'
         >
           Add comment
-        </button>
-      </Form>
+        </Button>
+      </form>
     );
   }
 }
