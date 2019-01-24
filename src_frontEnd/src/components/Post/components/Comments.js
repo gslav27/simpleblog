@@ -1,6 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import Comment from './Comment';
+import Spinner from '../../UI/Spinner';
 
 
 const Header = styled.h3`
@@ -13,29 +16,33 @@ const Header = styled.h3`
   border-top: 1px solid ${({ theme }) => theme.color};
 `;
 
-const CommentDetails = styled.span`
-  font-size: 0.8em;
-  color: #777;
+const Qty = styled.i`
+  color: ${({ theme }) => theme.color};
+  &:before {
+    content: ' (';
+    position: relative;
+    left: 0;
+  };
+  &:after {
+    content: ')';
+    position: relative:
+    right: 0:
+  };
 `;
 
-const CommentText = styled.p`
-  font-size: 0.9em;
-  margin: 0 0 0.8em;
-  color: seagreen;
-`;
 
-const Comments = ({ comments }) => (
-  <Fragment>
-    <Header>comments</Header>
-    {comments.map(comment => (
-      <div key={comment.id}>
-        <CommentDetails>{comment.author} left a comment ({comment.date})</CommentDetails>
-        <CommentText>{comment.body}</CommentText>
-      </div>
-    ))}
-  </Fragment>
-);
-
+const Comments = ({ comments, waitCurrentPostCommentsFetching }) => {
+  const renderComments = () => comments.map(({ id, ...props }) => <Comment key={id} {...props} />);
+  return (
+    <Fragment>
+      <Header> comments
+        <Qty>{comments.length}</Qty>
+      </Header>
+      {!!(comments.length) && renderComments() }
+      { waitCurrentPostCommentsFetching && <Spinner /> }
+    </Fragment>
+  );
+};
 
 Comments.propTypes = {
   comments: PropTypes.arrayOf(
@@ -46,7 +53,8 @@ Comments.propTypes = {
       date: PropTypes.string,
     }),
   ).isRequired,
+  waitCurrentPostCommentsFetching: PropTypes.bool.isRequired,
 };
 
 
-export default Comments;
+export default memo(Comments);

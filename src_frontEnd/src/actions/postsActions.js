@@ -29,3 +29,6 @@ export const waitResponse = (type = 1, loading = true) => ({
   type: actionType[type],
   payload: loading,
 });
+
+
+export const cleanUpCurrentPost = () => ({ type: types.CLEAN_UP_CURRENT_POST });

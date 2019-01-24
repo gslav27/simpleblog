@@ -7,30 +7,19 @@ import AddComment from './components/AddComment';
 import Spinner from '../UI/Spinner';
 
 
-const PostLayout = ({ post, comments, handleAddNewComment, ...props }) => (
+const PostLayout = ({ post, comments, ...props }) => (
   <section>
     {
       props.waitCurrentPostFetching
         ? <Spinner />
         : (
           <Fragment>
-            <PostCard
-              title={post.title}
-              author={post.author}
-              date={post.date}
-              body={post.body}
+            <PostCard {...post} />
+            <Comments
+              comments={comments}
+              waitCurrentPostCommentsFetching={props.waitCurrentPostCommentsFetching}
             />
-            {
-              props.waitCurrentPostCommentsFetching
-                ? <Spinner />
-                : (
-                  <Fragment>
-                    <Comments comments={comments} />
-                    <hr />
-                    <AddComment onChange={handleAddNewComment} />
-                  </Fragment>
-                )
-            }
+            <AddComment onChange={props.handleAddNewComment} />
           </Fragment>
         )
     }

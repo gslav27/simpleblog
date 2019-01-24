@@ -44,6 +44,14 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         waitCurrentPostCommentsFetching: payload,
       };
+    case types.CLEAN_UP_CURRENT_POST:
+      return {
+        ...state,
+        currentPost: {},
+        currentPostComments: [],
+        waitCurrentPostFetching: true,
+        waitCurrentPostCommentsFetching: true,
+      };
     default:
       return state;
   }

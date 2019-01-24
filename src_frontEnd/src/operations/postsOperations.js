@@ -1,6 +1,9 @@
 import * as postsActions from '../actions/postsActions';
 
 
+export const { cleanUpCurrentPost } = postsActions;
+
+
 const getFetchObj = (method, bodyData) => {
   const obj = {
     method,

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
   fetchCurrentPostData,
   addComment,
+  cleanUpCurrentPost,
 } from '../operations/postsOperations';
 
 import PostLayout from '../components/Post/PostLayout';
@@ -22,11 +23,8 @@ class Post extends Component {
     window.scrollTo(0, 0);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (
-      (this.props.currentPostComments !== nextProps.currentPostComments) ||
-      (this.props.waitCurrentPostFetching !== nextProps.waitCurrentPostFetching)
-    );
+  componentWillUnmount() {
+    this.props.cleanUpCurrentPost();
   }
 
   handleNewComment(...commentBody) {
@@ -55,6 +53,7 @@ Post.propTypes = {
   match: PropTypes.shape({ params: PropTypes.shape({ postId: PropTypes.string }) }).isRequired,
   fetchCurrentPostData: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
+  cleanUpCurrentPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -67,6 +66,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchCurrentPostData,
   addComment,
+  cleanUpCurrentPost,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);
