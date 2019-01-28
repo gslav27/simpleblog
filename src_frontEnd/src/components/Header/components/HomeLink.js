@@ -9,7 +9,7 @@ const StyledLink = styled(Link)`
 `;
 
 const HomeLink = () => (
-  <StyledLink to='/' title='to home page'> <h3>SimpleBlog</h3></StyledLink>
+  <StyledLink to={`${process.env.PUBLIC_URL}/`} title='to home page'> <h3>SimpleBlog</h3></StyledLink>
 );
 
 export default memo(HomeLink);
