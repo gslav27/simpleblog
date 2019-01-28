@@ -5,6 +5,8 @@ import uniqid from 'uniqid';
 import CreatePostButton from '../components/Header/components/CreatePostButton';
 import NewPostForm from '../components/Header/components/NewPostForm';
 
+import { newPostFormInputs as inputs } from '../constants';
+
 
 class AddNewPost extends PureComponent {
   constructor(props) {
@@ -33,7 +35,7 @@ class AddNewPost extends PureComponent {
     const { showAddPostForm } = this.state;
     return (
       showAddPostForm
-        ? <NewPostForm onSubmit={this.handleNewPost} onCancel={this.handleCancel} />
+        ? <NewPostForm onSubmit={this.handleNewPost} onCancel={this.handleCancel} inputs={inputs} />
         : <CreatePostButton onClick={this.handleCreatePostClick} />
     );
   }

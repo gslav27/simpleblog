@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import CreateCommentButton from '../components/Post/components/CreateCommentButton';
-import AddCommentForm from '../components/Post/components/AddCommentForm';
+import NewCommentForm from '../components/Post/components/NewCommentForm';
+
+import { newPostCommentInputs as inputs } from '../constants';
 
 
 class AddNewComment extends PureComponent {
@@ -32,7 +34,7 @@ class AddNewComment extends PureComponent {
     const { showAddCommentForm } = this.state;
     return (
       showAddCommentForm
-        ? <AddCommentForm onSubmit={this.handleNewComment} onCancel={this.handleCancel} />
+        ? <NewCommentForm onSubmit={this.handleNewComment} onCancel={this.handleCancel} inputs={inputs} />
         : <CreateCommentButton onClick={this.handleCreateCommentClick} />
     );
   }

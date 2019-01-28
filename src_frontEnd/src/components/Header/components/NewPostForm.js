@@ -1,12 +1,10 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Dialog from '../../UI/Dialog';
 import TextInput from '../../UI/TextInput';
-
-import { newPostFormInputs as inputs } from '../../../constants';
-import { getObjFromKeys } from '../../../selectors/commonSelectors';
+import FormHandlerHOC from '../../../hocs/FormHandlerHOC';
 
 
 const Form = styled.form`
@@ -46,10 +44,8 @@ const Button = styled.button`
   padding: 5px 10px;
   border: none;
   border-radius: 3px;
-  // background-color: ${({ active, theme }) => (active ? theme.colors.active : '#eee')};
-  // color: ${({ active, theme }) => (active ? '#fff' : theme.colors.inactive)};
-  background-color: ${({ active }) => (active ? 'green' : '#eee')};
-  color: ${({ active }) => (active ? '#fff' : '#777')};
+  background-color: ${({ active, theme }) => (active ? theme.colors.active : '#eee')};
+  color: ${({ active, theme }) => (active ? '#fff' : theme.colors.inactive)};
   font-size: 1em;
   &:hover {
     cursor: pointer;
@@ -65,81 +61,56 @@ const Divider = styled.hr`
 `;
 
 
+const NewPostForm = ({ inputs, values, onSubmit, onCancel, onChange, formIsFilled }) => (
+  <Dialog
+    onClose={onCancel}
+  >
+    <Form onSubmit={onSubmit}>
+      <Header>
+        <Title id='dialog-title'>New post</Title>
+      </Header>
+      <Divider />
+      {Object.entries(inputs).map(([name, props]) => (
+        <TextInput
+          key={name}
+          value={values[name]}
+          id={`newPost${name}`}
+          label={name}
+          onChange={e => onChange(e, name)}
+          aria-label={`new post ${name}`}
+          aria-required='true'
+          labelAlign='right'
+          {...props}
+        />
+      ))}
+      <Divider />
+      <Footer>
+        <Button
+          active={formIsFilled()}
+          type='submit'
+          name='submitNewPost'
+        >
+          Add Post
+        </Button>
+        <Button
+          type='button'
+          onClick={onCancel}
+        >
+          Cancel
+        </Button>
+      </Footer>
+    </Form>
+  </Dialog>
+);
 
-class NewPostForm extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = getObjFromKeys(inputs);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.formIsFilled = () => !Object.entries(this.state).some(([_, value]) => !value.length);
-  }
-
-  handleTextChange(e, type) {
-    this.setState({ [type]: e.target.value });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log('SUBMIT', this.formIsFilled());
-    if (this.formIsFilled()) {
-      this.props.onSubmit({ ...this.state });
-      this.setState(getObjFromKeys(inputs));
-      return;
-    }
-    const alertTemplate = 'is required';
-    const emptyFormField = Object.entries(this.state).find(([_, value]) => !value.length)[0];
-    alert(`"${emptyFormField}" ${alertTemplate}`);
-  }
-
-  render() {
-    return (
-      <Dialog
-        onClose={this.props.onCancel}
-      >
-        <Form onSubmit={this.handleSubmit}>
-          <Header>
-            <Title id='dialog-title'>New post</Title>
-          </Header>
-          <Divider />
-          {Object.entries(inputs).map(([name, props]) => (
-            <TextInput
-              key={name}
-              value={this.state[name]}
-              id={`newPost${name}`}
-              label={name}
-              onChange={e => this.handleTextChange(e, name)}
-              aria-label={`new post ${name}`}
-              aria-required='true'
-              labelAlign='right'
-              {...props}
-            />
-          ))}
-          <Divider />
-          <Footer>
-            <Button
-              active={this.formIsFilled()}
-              type='submit'
-              name='submitNewPost'
-            >
-              Add Post
-            </Button>
-            <Button
-              type='button'
-              onClick={this.props.onCancel}
-            >
-              Cancel
-            </Button>
-          </Footer>
-        </Form>
-      </Dialog>
-    );
-  }
-}
 
 NewPostForm.propTypes = {
+  inputs: PropTypes.objectOf(PropTypes.object).isRequired,
+  values: PropTypes.objectOf(PropTypes.string).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  formIsFilled: PropTypes.func.isRequired,
 };
 
-export default NewPostForm;
+export default FormHandlerHOC(NewPostForm);
