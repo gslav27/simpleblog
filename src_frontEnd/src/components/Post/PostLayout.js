@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PostCard from './components/PostCard';
 import Comments from './components/Comments';
-import AddComment from './components/AddComment';
+import AddNewComment from '../../containers/AddNewComment';
 import Spinner from '../UI/Spinner';
 
 
@@ -18,8 +18,9 @@ const PostLayout = ({ post, comments, ...props }) => (
             <Comments
               comments={comments}
               waitCurrentPostCommentsFetching={props.waitCurrentPostCommentsFetching}
+              onDeleteComment={props.handleDeleteComment}
             />
-            <AddComment onChange={props.handleAddNewComment} />
+            <AddNewComment onSubmit={props.handleAddNewComment} />
           </Fragment>
         )
     }
@@ -38,6 +39,7 @@ PostLayout.propTypes = {
   }).isRequired,
   comments: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleAddNewComment: PropTypes.func.isRequired,
+  handleDeleteComment: PropTypes.func.isRequired,
 };
 
 

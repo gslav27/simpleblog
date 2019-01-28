@@ -5,6 +5,7 @@ import {
   fetchCurrentPostData,
   addComment,
   cleanUpCurrentPost,
+  deleteComment,
 } from '../operations/postsOperations';
 
 import PostLayout from '../components/Post/PostLayout';
@@ -14,6 +15,7 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.handleNewComment = this.handleNewComment.bind(this);
+    this.handleDeleteComment = this.handleDeleteComment.bind(this);
   }
 
   componentDidMount() {
@@ -27,9 +29,14 @@ class Post extends Component {
     this.props.cleanUpCurrentPost();
   }
 
-  handleNewComment(...commentBody) {
+  handleNewComment(data) {
     const { params } = this.props.match;
-    this.props.addComment(...commentBody, Number(params.postId));
+    this.props.addComment({ ...data, postId: params.postId });
+  }
+
+  handleDeleteComment(commentId) {
+    const { params } = this.props.match;
+    this.props.deleteComment(commentId, params.postId);
   }
 
   render() {
@@ -39,6 +46,7 @@ class Post extends Component {
         post={currentPost}
         comments={currentPostComments}
         handleAddNewComment={this.handleNewComment}
+        handleDeleteComment={this.handleDeleteComment}
         {...otherProps}
       />
     );
@@ -54,6 +62,7 @@ Post.propTypes = {
   fetchCurrentPostData: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
   cleanUpCurrentPost: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -67,6 +76,7 @@ const mapDispatchToProps = {
   fetchCurrentPostData,
   addComment,
   cleanUpCurrentPost,
+  deleteComment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);
