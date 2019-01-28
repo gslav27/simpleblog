@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchLatestPosts } from '../operations/postsOperations';
+import {
+  fetchLatestPosts,
+  deletePost,
+} from '../operations/postsOperations';
 
 import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
 
 class LatestPosts extends Component {
-  constructor(props) {
-    super(props);
-    this.handlePostClick = this.handlePostClick.bind(this);
-  }
-
   componentDidMount() {
     this.props.fetchLatestPosts();
-  }
-
-  handlePostClick(postId) {
-    const { history } = this.props;
-    const historyPath = `/posts/${postId}`;
-    history.push(historyPath);
   }
   
   render() {
@@ -29,7 +21,7 @@ class LatestPosts extends Component {
       <LatestPostsLayout
         posts={latestPosts}
         waitLatestPostFetching={waitLatestPostFetching}
-        onChange={this.handlePostClick}
+        onPostDelete={this.props.deletePost}
       />
     );
   }
@@ -37,9 +29,9 @@ class LatestPosts extends Component {
 
 LatestPosts.propTypes = {
   latestPosts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   waitLatestPostFetching: PropTypes.bool.isRequired,
   fetchLatestPosts: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -47,6 +39,9 @@ const mapStateToProps = state => ({
   waitLatestPostFetching: state.posts.waitLatestPostFetching,
 });
 
-const mapDispatchToProps = { fetchLatestPosts };
+const mapDispatchToProps = {
+  fetchLatestPosts,
+  deletePost,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LatestPosts);

@@ -11,17 +11,16 @@ const Section = styled.section`
 `;
 
 
-
-const LatestPostsLayout = ({ waitLatestPostFetching, onChange, posts }) => (
+const LatestPostsLayout = ({ waitLatestPostFetching, posts, onPostDelete }) => (
   <Section>
     {
       waitLatestPostFetching
         ? <Spinner />
         : (
-          posts.map(({ body, id, ...post }) => (
+          posts.map(({ body, _id, ...post }) => (
             <PostCard
-              key={id}
-              onChange={() => onChange(id)}
+              key={_id}
+              onDelete={() => onPostDelete(_id)}
               {...post}
             />
           )))
@@ -32,10 +31,13 @@ const LatestPostsLayout = ({ waitLatestPostFetching, onChange, posts }) => (
 
 LatestPostsLayout.propTypes = {
   waitLatestPostFetching: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      _id: PropTypes.string.isRequired,
+      id: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
       title: PropTypes.string,
       body: PropTypes.string,
       description: PropTypes.string,
@@ -43,6 +45,7 @@ LatestPostsLayout.propTypes = {
       date: PropTypes.string,
     }),
   ).isRequired,
+  onPostDelete: PropTypes.func.isRequired,
 };
 
 
