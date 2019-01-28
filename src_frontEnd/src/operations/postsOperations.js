@@ -1,3 +1,5 @@
+import uniqid from 'uniqid';
+
 import * as postsActions from '../actions/postsActions';
 import * as restApi from '../selectors/postsFetchDataSelectors';
 import { getLatestPosts } from '../selectors/postsDataSelectors';
@@ -84,13 +86,13 @@ export const deleteComment = (commentId, postId) => async (dispatch) => {
 };
 
 
-export const addPost = ({ id, title, author, body, description }) => async (dispatch) => {
+export const addPost = ({ title, author, body, description }) => async (dispatch) => {
   dispatch(postsActions.waitResponse(1));
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString();
   const newPostData = {
     date: formattedDate,
-    id,
+    id: uniqid(),
     title,
     author,
     body,

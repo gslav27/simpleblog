@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import LatestPosts from './containers/LatestPosts';
 import Post from './containers/Post';
 
-import Header from './containers/Header';
+import Header from './components/Header/HeaderLayout';
 import RootStyle from './App.styles';
 
 import { routes } from './constants';

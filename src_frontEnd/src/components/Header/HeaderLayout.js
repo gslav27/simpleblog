@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import HomeLink from './components/HomeLink';
@@ -18,10 +17,9 @@ const Header = styled.header`
 const HeaderLayout = props => (
   <Header>
     <HomeLink />
-    <AddNewPost onSubmit={props.handleNewPost} />
+    <AddNewPost />
   </Header>
 );
 
-HeaderLayout.propTypes = { handleNewPost: PropTypes.func.isRequired };
 
 export default HeaderLayout;
