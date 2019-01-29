@@ -10,14 +10,14 @@ import Spinner from '../UI/Spinner';
 const PostLayout = ({ post, comments, ...props }) => (
   <section>
     {
-      props.waitCurrentPostFetching
+      props.postLoading
         ? <Spinner />
         : (
           <Fragment>
             <PostCard {...post} />
             <Comments
               comments={comments}
-              waitCurrentPostCommentsFetching={props.waitCurrentPostCommentsFetching}
+              commentsLoading={props.commentsLoading}
               onDeleteComment={props.handleDeleteComment}
             />
             <AddNewComment onSubmit={props.handleAddNewComment} />
@@ -29,8 +29,8 @@ const PostLayout = ({ post, comments, ...props }) => (
 
 
 PostLayout.propTypes = {
-  waitCurrentPostFetching: PropTypes.bool.isRequired,
-  waitCurrentPostCommentsFetching: PropTypes.bool.isRequired,
+  postLoading: PropTypes.bool.isRequired,
+  commentsLoading: PropTypes.bool.isRequired,
   post: PropTypes.shape({
     title: PropTypes.string,
     body: PropTypes.string,

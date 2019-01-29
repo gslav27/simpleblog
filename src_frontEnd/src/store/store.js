@@ -4,6 +4,7 @@ import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
 import rootReducer from '../reducers';
+import callAPI from '../middlewares/callAPI';
 
 export const history = createHistory();
 
@@ -11,6 +12,7 @@ const initialState = {};
 
 const middleware = [
   thunk,
+  callAPI,
   routerMiddleware(history),
 ];
 

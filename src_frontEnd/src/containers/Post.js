@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  fetchCurrentPostData,
+  getPostData,
   addComment,
   cleanUpCurrentPost,
   deleteComment,
@@ -21,7 +21,7 @@ class Post extends Component {
   componentDidMount() {
     // handle URL location (if its specific Post, someones link, page was reloaded, etc)
     const { params } = this.props.match;
-    this.props.fetchCurrentPostData(params.postId);
+    this.props.getPostData(params.postId);
     window.scrollTo(0, 0);
   }
 
@@ -56,24 +56,24 @@ class Post extends Component {
 Post.propTypes = {
   currentPost: PropTypes.object.isRequired,
   currentPostComments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  waitCurrentPostFetching: PropTypes.bool.isRequired,
-  waitCurrentPostCommentsFetching: PropTypes.bool.isRequired,
+  postLoading: PropTypes.bool.isRequired,
+  commentsLoading: PropTypes.bool.isRequired,
   match: PropTypes.shape({ params: PropTypes.shape({ postId: PropTypes.string }) }).isRequired,
-  fetchCurrentPostData: PropTypes.func.isRequired,
+  getPostData: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
-  cleanUpCurrentPost: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
+  cleanUpCurrentPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   currentPost: state.posts.currentPost,
   currentPostComments: state.posts.currentPostComments,
-  waitCurrentPostFetching: state.posts.waitCurrentPostFetching,
-  waitCurrentPostCommentsFetching: state.posts.waitCurrentPostCommentsFetching,
+  postLoading: state.posts.loading.post,
+  commentsLoading: state.posts.loading.comments,
 });
 
 const mapDispatchToProps = {
-  fetchCurrentPostData,
+  getPostData,
   addComment,
   cleanUpCurrentPost,
   deleteComment,

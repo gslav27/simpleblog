@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  fetchLatestPosts,
+  getLatestPosts,
   deletePost,
 } from '../operations/postsOperations';
 
@@ -11,16 +11,16 @@ import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
 
 class LatestPosts extends Component {
   componentDidMount() {
-    this.props.fetchLatestPosts();
+    this.props.getLatestPosts();
   }
   
   render() {
-    const { latestPosts, waitLatestPostFetching } = this.props;
+    const { latestPosts, latestPostsLoading } = this.props;
 
     return (
       <LatestPostsLayout
         posts={latestPosts}
-        waitLatestPostFetching={waitLatestPostFetching}
+        latestPostsLoading={latestPostsLoading}
         onPostDelete={this.props.deletePost}
       />
     );
@@ -29,18 +29,18 @@ class LatestPosts extends Component {
 
 LatestPosts.propTypes = {
   latestPosts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  waitLatestPostFetching: PropTypes.bool.isRequired,
-  fetchLatestPosts: PropTypes.func.isRequired,
+  latestPostsLoading: PropTypes.bool.isRequired,
+  getLatestPosts: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   latestPosts: state.posts.latestPosts,
-  waitLatestPostFetching: state.posts.waitLatestPostFetching,
+  latestPostsLoading: state.posts.loading.latestPosts,
 });
 
 const mapDispatchToProps = {
-  fetchLatestPosts,
+  getLatestPosts,
   deletePost,
 };
 

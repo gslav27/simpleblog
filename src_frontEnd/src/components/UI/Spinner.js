@@ -1,19 +1,28 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
-const spin = keyframes`
-  to { transform: rotate(360deg); }
+import CircularProgress from '@material-ui/core/CircularProgress';
+import styled from 'styled-components';
+
+
+const Container = styled.div`
+width: 100%;
+height: 100%;
+margin: auto;
+text-align: center;
+  & * { 
+    color: ${({ theme }) => theme.color}
+  }
 `;
 
-const SpinnerDiv = styled.div`
-  display: block;
-  width: 3em;
-  height: 3em;
-  border: 3px solid rgba(155,155,155,.3);
-  border-radius: 50%;
-  border-top-color: #777;
-  animation: ${spin} 1s ease-in-out infinite;
-`;
+const Spinner = ({ size, ...props }) => (
+  <Container {...props}>
+    <CircularProgress size={size} />
+  </Container>
+);
 
-const Spinner = () => <SpinnerDiv />;
+Spinner.propTypes = { size: PropTypes.number };
+
+Spinner.defaultProps = { size: 50 };
+
 export default Spinner;

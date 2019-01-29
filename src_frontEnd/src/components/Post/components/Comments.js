@@ -31,7 +31,7 @@ const Qty = styled.i`
 `;
 
 
-const Comments = ({ comments, waitCurrentPostCommentsFetching, onDeleteComment }) => {
+const Comments = ({ comments, commentsLoading, onDeleteComment }) => {
   const renderComments = () => comments.map(({ _id, ...props }) => (
     <Comment
       key={_id}
@@ -45,7 +45,7 @@ const Comments = ({ comments, waitCurrentPostCommentsFetching, onDeleteComment }
         <Qty>{comments.length}</Qty>
       </Header>
       {!!(comments.length) && renderComments() }
-      { waitCurrentPostCommentsFetching && <Spinner /> }
+      {commentsLoading && <Spinner /> }
     </Fragment>
   );
 };
@@ -59,7 +59,7 @@ Comments.propTypes = {
       date: PropTypes.string,
     }),
   ).isRequired,
-  waitCurrentPostCommentsFetching: PropTypes.bool.isRequired,
+  commentsLoading: PropTypes.bool.isRequired,
   onDeleteComment: PropTypes.func.isRequired,
 };
 

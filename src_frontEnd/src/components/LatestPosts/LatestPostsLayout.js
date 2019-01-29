@@ -1,20 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import PostCard from './components/PostCard';
 import Spinner from '../UI/Spinner';
+
 
 const Section = styled.section`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  align-items: ${({ loading }) => (loading ? 'center' : 'unset')};
+  height: ${({ loading }) => (loading ? '85vh' : 'unset')};
 `;
 
 
-const LatestPostsLayout = ({ waitLatestPostFetching, posts, onPostDelete }) => (
-  <Section>
+const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
+  <Section
+    loading={latestPostsLoading}
+    // aria-describedby='loading'
+    aria-busy={latestPostsLoading}
+  >
     {
-      waitLatestPostFetching
+      latestPostsLoading && !posts.length
         ? <Spinner />
         : (
           posts.map(({ body, _id, ...post }) => (
@@ -30,7 +38,7 @@ const LatestPostsLayout = ({ waitLatestPostFetching, posts, onPostDelete }) => (
 
 
 LatestPostsLayout.propTypes = {
-  waitLatestPostFetching: PropTypes.bool.isRequired,
+  latestPostsLoading: PropTypes.bool.isRequired,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
