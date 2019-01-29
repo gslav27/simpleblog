@@ -1,8 +1,8 @@
 import { START, SUCCESS, FAIL } from '../actions/types';
 
-export default store => dispatch => async (action) => {
+export default ({ dispatch }) => next => async (action) => {
   const { callAPI, type, options, ...rest } = action;
-  if (!callAPI) return dispatch(action);
+  if (!callAPI) return next(action);
 
   dispatch({ ...rest, type: type + START });
 
