@@ -2,8 +2,10 @@ export default {
   color: 'rgb(38,50,56)',
   colors: {
     active: 'green',
-    inactive: '#777',
+    inactive: '#aaa',
     // text: 'rgb(38,50,56)',
+    commentsMain: 'rgb(98,113,166)',
+    icon: 'gold',
   },
   lineHeight: 1.8,
   

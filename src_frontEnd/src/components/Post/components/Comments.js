@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,13 +7,11 @@ import Spinner from '../../UI/Spinner';
 
 
 const Header = styled.h3`
-  text-transform: lowercase;
+  text-transform: capitalize;
   color: ${({ theme }) => theme.color};
-  background-color: lightgrey;
-  padding: 0.7em 0.2em;
-  margin-top: 0;
-  margin-bottom: 0.2em;
-  border-top: 1px solid ${({ theme }) => theme.color};
+  padding: 10px 0px 5px;
+  margin: 0;
+  font-size: 0.9em;
 `;
 
 const Qty = styled.i`
@@ -25,35 +23,52 @@ const Qty = styled.i`
   };
   &:after {
     content: ')';
-    position: relative:
-    right: 0:
+    position: relative;
+    right: 0;
   };
 `;
 
+const Text = styled.p`
+  color: #999;
+  font-weight: 900;
+  text-align: center;
+`;
 
-const Comments = ({ comments, commentsLoading, onDeleteComment }) => {
-  const renderComments = () => comments.map(({ _id, ...props }) => (
-    <Comment
-      key={_id}
-      onDelete={() => onDeleteComment(_id)}
-      {...props}
-    />
-  ));
-  return (
-    <Fragment>
-      <Header> comments
-        <Qty>{comments.length}</Qty>
-      </Header>
-      {!!(comments.length) && renderComments() }
-      {commentsLoading && <Spinner /> }
-    </Fragment>
-  );
-};
 
-Comments.propTypes = {
+const CommentsList = ({ comments, onDeleteComment }) => (
+  comments.length
+    ? (
+      comments.map(props => (
+        <Comment
+          key={props._id}
+          onDelete={onDeleteComment}
+          {...props}
+        />
+      ))
+    )
+    : <Text>There are no comments yet.</Text>
+);
+
+
+const CommentsSection = ({ comments, commentsLoading, onDeleteComment }) => (
+  <>
+    <Header>
+      comments
+      <Qty>{comments.length}</Qty>
+    </Header>
+    {
+      commentsLoading
+        ? <Spinner />
+        : CommentsList({ comments, onDeleteComment })
+    }
+  </>
+);
+
+
+CommentsSection.propTypes = {
   comments: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      _id: PropTypes.string,
       body: PropTypes.string,
       author: PropTypes.string,
       date: PropTypes.string,
@@ -64,4 +79,4 @@ Comments.propTypes = {
 };
 
 
-export default memo(Comments);
+export default memo(CommentsSection);

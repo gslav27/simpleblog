@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Dialog from '../../UI/Dialog';
 import TextInput from '../../UI/TextInput';
+import TextButton from '../../UI/TextButton';
 import FormHandlerHOC from '../../../hocs/FormHandlerHOC';
 
 
@@ -39,19 +40,6 @@ const Footer = styled.div`
   justify-content: start;
 `;
 
-const Button = styled.button`
-  margin: 5px 5px 5px 0px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 3px;
-  background-color: ${({ active, theme }) => (active ? theme.colors.active : '#eee')};
-  color: ${({ active, theme }) => (active ? '#fff' : theme.colors.inactive)};
-  font-size: 1em;
-  &:hover {
-    cursor: pointer;
-  };
-`;
-
 const Divider = styled.hr`
   width: 100%;
   height: 1px;
@@ -85,19 +73,19 @@ const NewPostForm = ({ inputs, values, onSubmit, onCancel, onChange, formIsFille
       ))}
       <Divider />
       <Footer>
-        <Button
+        <TextButton
           active={formIsFilled()}
           type='submit'
           name='submitNewPost'
         >
           Add Post
-        </Button>
-        <Button
+        </TextButton>
+        <TextButton
           type='button'
           onClick={onCancel}
         >
           Cancel
-        </Button>
+        </TextButton>
       </Footer>
     </Form>
   </Dialog>

@@ -4,11 +4,13 @@ import Add from '@material-ui/icons/Add';
 import AddCircle from '@material-ui/icons/AddCircle';
 
 import UserInteractionHandlersHOC from '../../../hocs/UserInteractionHandlersHOC';
-import Button from '../../UI/Button';
+import IconButton from '../../UI/IconButton';
+
+import theme from '../../../utilities/themes';
 
 
 const AddPostButton = props => (
-  <Button
+  <IconButton
     id='AddPostButton'
     type='button'
     title='create new Post'
@@ -17,10 +19,10 @@ const AddPostButton = props => (
   >
     {
       props.userOver
-        ? <AddCircle fontSize='large' nativeColor='gold' />
-        : <Add fontSize='large' nativeColor='gold' />
+        ? <AddCircle fontSize='large' nativeColor={theme.colors.icon} />
+        : <Add fontSize='large' nativeColor={theme.colors.icon} />
     }
-  </Button>
+  </IconButton>
 );
 
 

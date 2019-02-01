@@ -4,10 +4,10 @@ import Delete from '@material-ui/icons/Delete';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 
 import UserInteractionHandlersHOC from '../../../hocs/UserInteractionHandlersHOC';
-import Button from '../../UI/Button';
+import Button from '../../UI/IconButton';
 
 
-const DeltePostButton = props => (
+const DeletePostButton = props => (
   <Button
     type='button'
     title='delete Post'
@@ -23,10 +23,10 @@ const DeltePostButton = props => (
 );
 
 
-DeltePostButton.propTypes = {
+DeletePostButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   userOver: PropTypes.bool.isRequired,
   handlers: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
-export default UserInteractionHandlersHOC(DeltePostButton);
+export default UserInteractionHandlersHOC(DeletePostButton);

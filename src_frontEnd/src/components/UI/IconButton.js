@@ -21,7 +21,7 @@ const StyledButton = styled.button`
 `;
 
 
-const Button = ({ children, ...props }) => (
+const IconButton = ({ children, ...props }) => (
   <StyledButton
     {...props}
   >
@@ -30,7 +30,7 @@ const Button = ({ children, ...props }) => (
 );
 
 
-Button.propTypes = {
+IconButton.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -38,4 +38,4 @@ Button.propTypes = {
 };
 
 
-export default memo(Button);
+export default memo(IconButton);

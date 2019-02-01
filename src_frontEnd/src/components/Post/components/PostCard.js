@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 
 const Article = styled.article`
-  margin: 3em 0;
+  margin: 50px 0px 20px;
   text-align: center;
 `;
 
@@ -20,7 +20,11 @@ const SubTitle = styled.p`
 `;
 
 const Divider = styled.hr`
-  color: ${({ theme }) => theme.color};
+  /* color: ${({ theme }) => theme.color}; */
+  color: none;
+  height: ${({ height }) => height || '1x'};
+  background: ${({ theme }) => theme.color};
+  border-radius: 10px;
 `;
 
 const Text = styled.p`
@@ -35,6 +39,7 @@ const PostCard = ({ title, author, date, body }) => (
     <SubTitle>{date}</SubTitle>
     <Divider />
     <Text>{body}</Text>
+    <Divider height='10px' />
   </Article>
 );
 

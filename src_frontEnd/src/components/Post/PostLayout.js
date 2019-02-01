@@ -15,12 +15,12 @@ const PostLayout = ({ post, comments, ...props }) => (
         : (
           <Fragment>
             <PostCard {...post} />
+            <AddNewComment onSubmit={props.handleAddNewComment} commentType='main' />
             <Comments
               comments={comments}
               commentsLoading={props.commentsLoading}
               onDeleteComment={props.handleDeleteComment}
             />
-            <AddNewComment onSubmit={props.handleAddNewComment} />
           </Fragment>
         )
     }

@@ -25,10 +25,10 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
       latestPostsLoading && !posts.length
         ? <Spinner />
         : (
-          posts.map(({ body, _id, ...post }) => (
+          posts.map(({ body, ...post }) => (
             <PostCard
-              key={_id}
-              onDelete={() => onPostDelete(_id)}
+              key={post._id}
+              onDelete={onPostDelete}
               {...post}
             />
           )))
@@ -45,7 +45,7 @@ LatestPostsLayout.propTypes = {
       id: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
-      ]).isRequired,
+      ]),
       title: PropTypes.string,
       body: PropTypes.string,
       description: PropTypes.string,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getObjFromKeys } from '../selectors/commonSelectors';
 
+
 export default function (WrappedComponent) {
   class FormHandlerHOC extends PureComponent {
     constructor(props) {
@@ -41,6 +42,7 @@ export default function (WrappedComponent) {
       );
     }
   }
+
 
   FormHandlerHOC.propTypes = {
     inputs: PropTypes.objectOf(PropTypes.object).isRequired,

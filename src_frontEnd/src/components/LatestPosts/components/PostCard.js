@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import DeletePostButton from './DeletePostButton';
-import { routes } from '../../../constants';
+import Spinner from '../../UI/Spinner';
+
+import { routes } from '../../../utilities/constants';
 
 
 const Container = styled.section`
-  box-sizing: border-box;
   flex: 1 1 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   border: 2px solid black;
   border-radius: 3px;
@@ -37,7 +41,6 @@ const Article = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-sizing: border-box;
   height: 100%;
   padding: 5px 20px;
 `;
@@ -81,35 +84,52 @@ const FooterText = styled.div`
 `;
 
 
-const PostCard = ({ title, description, author, date, onDelete, id }) => (
+const PostCard = ({ title, description, author, date, onDelete, id, _id }) => (
   <Container>
-    <StyledLink to={`${process.env.PUBLIC_URL}${routes.posts}/${id}`} title='read article' />
-    <Article title='read article'>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
-      <Footer>
-        <FooterText>{author}</FooterText>
-        <FooterText>{date}</FooterText>
-      </Footer>
-    </Article>
-    <TopRightContainer>
-      <DeletePostButton onClick={onDelete} />
-    </TopRightContainer>
+    {
+      !title
+        ? <Spinner size={35} />
+        : (
+          <>
+            <StyledLink to={`${process.env.PUBLIC_URL}${routes.posts}/${id}`} title='read article' />
+            <Article title='read article'>
+              <Title>{title}</Title>
+              <Description>{description}</Description>
+              <Footer>
+                <FooterText>{author}</FooterText>
+                <FooterText>{date}</FooterText>
+              </Footer>
+            </Article>
+            <TopRightContainer>
+              <DeletePostButton onClick={() => onDelete(_id)} />
+            </TopRightContainer>
+          </>
+        )
+    }
   </Container>
 );
 
-
 PostCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  author: PropTypes.string,
+  date: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ]).isRequired,
+  ]),                     // 'id' is postId for Router and connection between PostComments & PostItems
+  _id: PropTypes.string,  // '_id' is item's REST API (restdb) database id
+};
+
+PostCard.defaultProps = {
+  title: '',
+  description: '',
+  author: '',
+  date: '',
+  id: '',
+  _id: '',
 };
 
 
-export default PostCard;
+export default memo(PostCard);

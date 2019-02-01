@@ -1,5 +1,9 @@
 import * as types from '../actions/types';
-import { getLatestPosts } from '../selectors/postsDataSelectors';
+import {
+  getDataWithEmptyDeletedItem,
+  getTenLatestItems,
+  getSortedByDate,
+} from '../../selectors/commonSelectors';
 
 const { SUCCESS, START, FAIL } = types;
 
@@ -24,7 +28,7 @@ export default function (state = initialState, { type, payload }) {
     case (types.GET_LATEST_POSTS + SUCCESS):
       return {
         ...state,
-        latestPosts: getLatestPosts(payload),
+        latestPosts: getTenLatestItems(payload),
         loading: { ...state.loading, latestPosts: false },
       };
     case (types.GET_POST_DATA + SUCCESS):
@@ -36,19 +40,19 @@ export default function (state = initialState, { type, payload }) {
     case (types.GET_POST_COMMENTS + SUCCESS):
       return {
         ...state,
-        currentPostComments: payload,
+        currentPostComments: getSortedByDate(payload),
         loading: { ...state.loading, comments: false },
       };
     case (types.POST_NEW_POST + SUCCESS):
       return {
         ...state,
-        latestPosts: [payload, ...state.latestPosts.slice(0, 9)],
+        latestPosts: [payload, ...state.latestPosts.slice(1, 10)],
         loading: { ...state.loading, newPost: false },
       };
     case (types.POST_NEW_COMMENT + SUCCESS):
       return {
         ...state,
-        currentPostComments: [...state.currentPostComments, payload],
+        currentPostComments: [payload, ...state.currentPostComments.slice(1)],
         loading: { ...state.loading, newComment: false },
       };
     case (types.DELETE_POST + SUCCESS):
@@ -84,21 +88,25 @@ export default function (state = initialState, { type, payload }) {
     case (types.POST_NEW_POST + START):
       return {
         ...state,
+        latestPosts: [{ _id: 'temp' }, ...state.latestPosts],      // test
         loading: { ...state.loading, newPost: true },
       };
     case (types.POST_NEW_COMMENT + START):
       return {
         ...state,
+        currentPostComments: [{ _id: 'temp' }, ...state.currentPostComments],      // test
         loading: { ...state.loading, newComment: true },
       };
     case (types.DELETE_POST + START):
       return {
         ...state,
+        latestPosts: getDataWithEmptyDeletedItem(state.latestPosts, payload._id),     // test
         loading: { ...state.loading, deletePost: true },
       };
     case (types.DELETE_COMMENT + START):
       return {
         ...state,
+        currentPostComments: getDataWithEmptyDeletedItem(state.currentPostComments, payload._id),     // test
         loading: { ...state.loading, deleteComment: true },
       };
 
@@ -122,11 +130,13 @@ export default function (state = initialState, { type, payload }) {
     case (types.POST_NEW_POST + FAIL):
       return {
         ...state,
+        latestPosts: state.latestPosts.slice(1, 10),            // test
         loading: { ...state.loading, newPost: false },
       };
     case (types.POST_NEW_COMMENT + FAIL):
       return {
         ...state,
+        currentPostComments: state.currentPostComments.slice(1),            // test
         loading: { ...state.loading, newComment: false },
       };
     case (types.DELETE_POST + FAIL):

@@ -26,6 +26,7 @@ export const Label = styled.label`
 
 const Input = styled.input`
   flex: 1 1 auto;
+  box-sizing: border-box;
   font-size: 1em;
   padding: 2px 5px;
   height: 1.6em;
@@ -42,6 +43,7 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   flex: 1 1 auto;
+  box-sizing: border-box;
   font-size: 1em;
   padding: 5px;
   ${({ theme }) => theme.inputTextMixin};

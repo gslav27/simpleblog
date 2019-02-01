@@ -43,6 +43,7 @@ export const newPostCommentInputs = {
     element: 'textarea',
     placeholder: 'your comment...',
     rows: 3,
+    autoFocus: true,
   },
   author: {
     element: 'input',

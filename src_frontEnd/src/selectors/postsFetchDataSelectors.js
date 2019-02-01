@@ -1,4 +1,4 @@
-import { DB } from '../constants';
+import { DB } from '../utilities/constants';
 
 // Fetch object Selector
 /* eslint-disable import/prefer-default-export */

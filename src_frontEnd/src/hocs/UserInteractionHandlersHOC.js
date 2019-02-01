@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 
 function UserInteractionHandlersHOC(WrappedComponent) {
@@ -20,6 +21,12 @@ function UserInteractionHandlersHOC(WrappedComponent) {
 
     render() {
       const { userOverElement } = this.state;
+
+      // in case of parent element also has this HOC instance
+      if (typeof this.props.userOver === 'boolean') {
+        return <WrappedComponent {...this.props} />;
+      }
+
       return (
         <WrappedComponent
           userOver={userOverElement}
@@ -36,5 +43,7 @@ function UserInteractionHandlersHOC(WrappedComponent) {
   };
 }
 
+
+UserInteractionHandlersHOC.propTypes = { userOver: PropTypes.bool };
 
 export default UserInteractionHandlersHOC;

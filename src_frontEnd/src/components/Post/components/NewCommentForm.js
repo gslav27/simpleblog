@@ -3,27 +3,21 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import TextInput from '../../UI/TextInput';
+import TextButton from '../../UI/TextButton';
 import FormHandlerHOC from '../../../hocs/FormHandlerHOC';
 
 
-const Button = styled.button`
-  margin: 0.5em 0;
-  padding: 1em;
+const Form = styled.form`
+  width: 100%;
+  border: 1px solid #eee;
   border-radius: 3px;
-  border: 2px solid ${({ theme }) => theme.color};
-  background-color: white;
-  ${({ theme }) => theme.boldUppercaseMixin(theme.color)}
-  &:hover {
-    cursor: pointer;
-  };
-  &:active {
-    background: #eee;
-  };
+  padding: 10px;
+  box-shadow: 0px 0px 10px ${({ theme }) => theme.colors.commentsMain};
 `;
 
 
-const NewCommentForm = ({ inputs, values, onSubmit, onChange, formIsFilled }) => (
-  <form onSubmit={onSubmit}>
+const NewCommentForm = ({ inputs, values, onSubmit, onCancel, onChange, formIsFilled }) => (
+  <Form onSubmit={onSubmit}>
     {Object.entries(inputs).map(([name, props]) => (
       <TextInput
         key={name}
@@ -38,13 +32,19 @@ const NewCommentForm = ({ inputs, values, onSubmit, onChange, formIsFilled }) =>
         {...props}
       />
     ))}
-    <Button
+    <TextButton
       active={formIsFilled()}
       type='submit'
     >
-      Add comment
-    </Button>
-  </form>
+      Сomment
+    </TextButton>
+    <TextButton
+      type='button'
+      onClick={onCancel}
+    >
+      Cancel
+    </TextButton>
+  </Form>
 );
 
 
@@ -53,6 +53,7 @@ NewCommentForm.propTypes = {
   values: PropTypes.objectOf(PropTypes.string).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   formIsFilled: PropTypes.func.isRequired,
 };
 

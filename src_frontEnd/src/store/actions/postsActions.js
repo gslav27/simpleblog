@@ -1,6 +1,6 @@
 import * as types from './types';
-import { DB } from '../constants';
-import { getObj } from '../selectors/postsFetchDataSelectors';
+import { DB } from '../../utilities/constants';
+import { getObj } from '../../selectors/postsFetchDataSelectors';
 
 
 export const getLatestPosts = () => ({
@@ -38,17 +38,19 @@ export const postNewComment = newCommentData => ({
 });
 
 
-export const deletePost = postId => ({
+export const deletePost = dbPostId => ({
   type: types.DELETE_POST,
-  callAPI: `${DB.URL}/${DB.COLLECTIONS.posts}/${postId}`,
+  callAPI: `${DB.URL}/${DB.COLLECTIONS.posts}/${dbPostId}`,
   options: getObj('DELETE'),
+  payload: { _id: dbPostId },
 });
 
 
-export const deleteComment = commentId => ({
+export const deleteComment = dbCommentId => ({
   type: types.DELETE_COMMENT,
-  callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}/${commentId}`,
+  callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}/${dbCommentId}`,
   options: getObj('DELETE'),
+  payload: { _id: dbCommentId },
 });
 
 
