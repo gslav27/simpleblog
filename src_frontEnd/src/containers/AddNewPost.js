@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uniqid from 'uniqid';
 
-import { postNewPost } from '../store/actions/postsActions';
-import { getFormattedDate } from '../selectors/commonSelectors';
+import { postNewPost } from '../store/posts/postsActionCreators';
+import getCurrentDate from '../utilities/getters/getCurrentDate';
 
 import CreatePostButton from '../components/Header/components/CreatePostButton';
 import NewPostForm from '../components/Header/components/NewPostForm';
@@ -17,7 +17,7 @@ import { newPostFormInputs as inputs } from '../utilities/constants';
 const AddNewPost = ({ postNewPost }) => {
   const handleAddPost = ({ title, author, body, description }) => {
     const newPostData = {
-      date: getFormattedDate(),
+      date: getCurrentDate(),
       id: uniqid(),
       title,
       author,

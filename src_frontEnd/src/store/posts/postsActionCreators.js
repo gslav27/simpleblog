@@ -1,47 +1,47 @@
-import * as types from './types';
+import * as types from './postsActionTypes';
 import { DB } from '../../utilities/constants';
-import { getObj } from '../../selectors/postsFetchDataSelectors';
+import getFetchObj from '../../utilities/getters/getFetchObj_RestDB';
 
 
 export const getLatestPosts = () => ({
   type: types.GET_LATEST_POSTS,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.posts}`,
-  options: getObj('GET'),
+  options: getFetchObj('GET'),
 });
 
 
 export const getPostData = postId => ({
   type: types.GET_POST_DATA,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.posts}?q={"id": ${Number(postId) || `"${postId}"`}}`,
-  options: getObj('GET'),
+  options: getFetchObj('GET'),
 });
 
 
 export const getPostComments = postId => ({
   type: types.GET_POST_COMMENTS,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}?q={"postId": ${Number(postId) || `"${postId}"`}}`,
-  options: getObj('GET'),
+  options: getFetchObj('GET'),
 });
 
 
 export const postNewPost = newPostData => ({
   type: types.POST_NEW_POST,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.posts}`,
-  options: getObj('POST', newPostData),
+  options: getFetchObj('POST', newPostData),
 });
 
 
 export const postNewComment = newCommentData => ({
   type: types.POST_NEW_COMMENT,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}`,
-  options: getObj('POST', newCommentData),
+  options: getFetchObj('POST', newCommentData),
 });
 
 
 export const deletePost = dbPostId => ({
   type: types.DELETE_POST,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.posts}/${dbPostId}`,
-  options: getObj('DELETE'),
+  options: getFetchObj('DELETE'),
   payload: { _id: dbPostId },
 });
 
@@ -49,7 +49,7 @@ export const deletePost = dbPostId => ({
 export const deleteComment = dbCommentId => ({
   type: types.DELETE_COMMENT,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}/${dbCommentId}`,
-  options: getObj('DELETE'),
+  options: getFetchObj('DELETE'),
   payload: { _id: dbCommentId },
 });
 

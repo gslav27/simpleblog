@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { getObjFromKeys } from '../selectors/commonSelectors';
+import getNewObj from '../utilities/getters/getNewObj';
 
 
 export default function (WrappedComponent) {
   class FormHandlerHOC extends PureComponent {
     constructor(props) {
       super(props);
-      this.state = getObjFromKeys(props.inputs);
+      this.state = getNewObj(props.inputs);
       this.handleTextChange = this.handleTextChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.formIsFilled = () => !Object.entries(this.state).some(([_, value]) => !value.length);
@@ -22,7 +22,7 @@ export default function (WrappedComponent) {
       e.preventDefault();
       if (this.formIsFilled()) {
         this.props.onSubmit({ ...this.state });
-        this.setState(getObjFromKeys(this.props.inputs));
+        this.setState(getNewObj(this.props.inputs));
         return;
       }
       const alertTemplate = 'is required';

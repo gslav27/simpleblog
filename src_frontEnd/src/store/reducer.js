@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import postsReducer from './postsReducer';
+import postsReducer from './posts/postsReducer';
 
 
 export default combineReducers({

@@ -8,13 +8,13 @@ const Header = styled.header`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-conent: flex-start;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
 `;
 
 
-const HeaderLayout = props => (
+const HeaderLayout = () => (
   <Header>
     <HomeLink />
     <AddNewPost />

@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import {
   getLatestPosts,
   deletePost,
-} from '../store/actions/postsActions';
+} from '../store/posts/postsActionCreators';
+
 import {
   getLatestPosts as getLatestPostsSelector,
   getLatestPostsLoadingStatus,
-} from '../selectors/latestPostsSelectors';
+} from '../store/posts/postsSelectors';
 
 import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
 

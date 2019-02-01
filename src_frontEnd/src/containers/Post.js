@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import {
   getCurrentPost,
   getCurrentPostComments,
   getPostLoadingStatus,
   getCommentsLoadingStatus,
-} from '../selectors/postSelectors';
-import { getFormattedDate } from '../selectors/commonSelectors';
+} from '../store/posts/postsSelectors';
+import getCurrentDate from '../utilities/getters/getCurrentDate';
 
 import {
   getPostData,
@@ -15,7 +16,7 @@ import {
   postNewComment,
   cleanUpCurrentPost,
   deleteComment,
-} from '../store/actions/postsActions';
+} from '../store/posts/postsActionCreators';
 
 import PostLayout from '../components/Post/PostLayout';
 
@@ -41,7 +42,7 @@ class Post extends Component {
     const { match, postNewComment } = this.props;
     const { postId } = match.params;
     const data = {
-      date: getFormattedDate(),
+      date: getCurrentDate(),
       postId: Number(postId) || postId,
       author,
       body,

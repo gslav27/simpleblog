@@ -1,4 +1,4 @@
-import { START, SUCCESS, FAIL } from '../actions/types';
+import { START, SUCCESS, FAIL } from '../actionTypes';
 
 export default ({ dispatch }) => next => async (action) => {
   const { callAPI, type, options, ...rest } = action;

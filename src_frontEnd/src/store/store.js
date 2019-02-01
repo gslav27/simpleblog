@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
-import rootReducer from './reducers';
-import callAPI from './middlewares/callAPI';
+import rootReducer from './reducer';
+import callAPI from './_storeMiddlewares/callAPI';
 
 export const history = createHistory();
 

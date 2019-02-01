@@ -1,11 +1,10 @@
-import * as types from '../actions/types';
-import {
-  getDataWithEmptyDeletedItem,
-  getTenLatestItems,
-  getSortedByDate,
-} from '../../selectors/commonSelectors';
+import * as types from './postsActionTypes';
+import { SUCCESS, START, FAIL } from '../actionTypes';
 
-const { SUCCESS, START, FAIL } = types;
+import { getTenLatestItems } from './postsSelectors';
+import getArrayWithReplacedMockItem from '../../utilities/getters/getArrayWithReplacedMockItem';
+import getSortedByDateNewestFirst from '../../utilities/getters/getSortedByDate_NewestFirst';
+
 
 const initialState = {
   latestPosts: [],
@@ -40,7 +39,7 @@ export default function (state = initialState, { type, payload }) {
     case (types.GET_POST_COMMENTS + SUCCESS):
       return {
         ...state,
-        currentPostComments: getSortedByDate(payload),
+        currentPostComments: getSortedByDateNewestFirst(payload),
         loading: { ...state.loading, comments: false },
       };
     case (types.POST_NEW_POST + SUCCESS):
@@ -88,25 +87,25 @@ export default function (state = initialState, { type, payload }) {
     case (types.POST_NEW_POST + START):
       return {
         ...state,
-        latestPosts: [{ _id: 'temp' }, ...state.latestPosts],      // test
+        latestPosts: [{ _id: 'temp' }, ...state.latestPosts],
         loading: { ...state.loading, newPost: true },
       };
     case (types.POST_NEW_COMMENT + START):
       return {
         ...state,
-        currentPostComments: [{ _id: 'temp' }, ...state.currentPostComments],      // test
+        currentPostComments: [{ _id: 'temp' }, ...state.currentPostComments],
         loading: { ...state.loading, newComment: true },
       };
     case (types.DELETE_POST + START):
       return {
         ...state,
-        latestPosts: getDataWithEmptyDeletedItem(state.latestPosts, payload._id),     // test
+        latestPosts: getArrayWithReplacedMockItem(state.latestPosts, payload._id),
         loading: { ...state.loading, deletePost: true },
       };
     case (types.DELETE_COMMENT + START):
       return {
         ...state,
-        currentPostComments: getDataWithEmptyDeletedItem(state.currentPostComments, payload._id),     // test
+        currentPostComments: getArrayWithReplacedMockItem(state.currentPostComments, payload._id),
         loading: { ...state.loading, deleteComment: true },
       };
 
