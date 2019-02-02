@@ -6,6 +6,7 @@ import styled from 'styled-components';
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 0;
   border-radius: 3px;
   border: none;
