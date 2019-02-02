@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Dialog from '../../UI/Dialog';
-import TextInput from '../../UI/TextInput';
-import TextButton from '../../UI/TextButton';
-import FormHandlerHOC from '../../../hocs/FormHandlerHOC';
+import Dialog from '_Ui_/Dialog';
+import TextInput from '_Ui_/TextInput';
+import TextButton from '_Ui_/TextButton';
+import FormHandlerHOC from '_Hocs_/FormHandlerHOC';
+
 
 
 const Form = styled.form`

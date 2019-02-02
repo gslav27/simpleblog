@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import getNewObj from '../utilities/getters/getNewObj';
+import getNewObj from '_Utils_/getters/getNewObj';
 
 
 export default function (WrappedComponent) {

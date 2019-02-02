@@ -2,8 +2,9 @@ const merge = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
 
+const defaultEnv = { PUBLIC_URL: '' };
 
-module.exports = env => merge([{
+module.exports = (env = defaultEnv) => merge([{
   entry: './src/index.js',
   mode: 'development',
   module: {
@@ -16,7 +17,14 @@ module.exports = env => merge([{
       },
     ],
   },
-  resolve: { extensions: ['*', '.js', '.jsx'] },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    alias: {
+      _Utils_: path.resolve(__dirname, '../src/utilities/'),
+      _Hocs_: path.resolve(__dirname, '../src/hocs/'),
+      _Ui_: path.resolve(__dirname, '../src/components/UI'),
+    },
+  },
   output: {
     path: path.resolve(__dirname, 'dist/'),
     publicPath: '/dist/',

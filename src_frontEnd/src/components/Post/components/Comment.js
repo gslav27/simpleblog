@@ -2,9 +2,8 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import DeleteButton from '../../UI/IconButtonDelete';
-import Spinner from '../../UI/Spinner';
-
+import DeleteButton from '_Ui_/IconButtonDelete';
+import Spinner from '_Ui_/Spinner';
 import AddNewComment from '../../../containers/AddNewComment';
 
 

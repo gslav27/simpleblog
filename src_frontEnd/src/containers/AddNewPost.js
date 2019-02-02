@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uniqid from 'uniqid';
 
+import { newPostFormInputs as inputs } from '_Utils_/constants';
+import getCurrentDate from '_Utils_/getters/getCurrentDate';
+import RenderForm from '_Hocs_/RenderForm';
 import { postNewPost } from '../store/posts/postsActionCreators';
-import getCurrentDate from '../utilities/getters/getCurrentDate';
-
 import CreatePostButton from '../components/Header/components/CreatePostButton';
 import NewPostForm from '../components/Header/components/NewPostForm';
-import RenderForm from '../hocs/RenderForm';
 
-import { newPostFormInputs as inputs } from '../utilities/constants';
 
 
 

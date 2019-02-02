@@ -4,6 +4,13 @@ module.exports = {
         "browser": true
     },
     "parser": "babel-eslint",
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "config/webpack.base.config.js"
+            }
+        },
+    },
     "rules": {
         "linebreak-style": 0,
         "no-unused-expressions": 0,
@@ -21,6 +28,7 @@ module.exports = {
         "one-var": 0,
         "no-return-assign": 1,
         "no-bitwise": 1,
+        "key-spacing": 0, //--fix
         "no-multi-spaces": [2, { "ignoreEOLComments": true }], //--fix
         "jsx-quotes": [2, "prefer-single"], //--fix
         "quotes": [2, "single", { "allowTemplateLiterals": true }], // --fix

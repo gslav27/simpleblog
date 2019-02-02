@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import getCurrentDate from '_Utils_/getters/getCurrentDate';
 import {
   getCurrentPost,
   getCurrentPostComments,
   getPostLoadingStatus,
   getCommentsLoadingStatus,
 } from '../store/posts/postsSelectors';
-import getCurrentDate from '../utilities/getters/getCurrentDate';
 
 import {
   getPostData,
@@ -31,6 +31,7 @@ class Post extends Component {
   async componentDidMount() {
     const { match, getPostData, getPostComments } = this.props;
     await getPostData(match.params.postId);
+    window.scrollTo(0, 0);
     getPostComments(match.params.postId);
   }
 

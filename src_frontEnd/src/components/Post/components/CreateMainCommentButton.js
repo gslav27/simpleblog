@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import UserInteractionHandlersHOC from '../../../hocs/UserInteractionHandlersHOC';
-import IconButtonAddComment from '../../UI/IconButtonAddComment';
+import theme from '_Utils_/themes';
+import UserInteractionHandlersHOC from '_Hocs_/UserInteractionHandlersHOC';
+import IconButtonAddComment from '_Ui_/IconButtonAddComment';
 
-import theme from '../../../utilities/themes';
 
 
 const Container = styled.div`

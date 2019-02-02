@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Spinner from '_Ui_/Spinner';
 import Comment from './Comment';
-import Spinner from '../../UI/Spinner';
 
 
 const Header = styled.h3`

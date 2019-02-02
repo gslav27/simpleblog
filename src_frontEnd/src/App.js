@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 
 import { Route, Switch } from 'react-router-dom';
 
+import { routes } from './utilities/constants';
 import Spinner from './components/UI/Spinner';
 import LatestPosts from './containers/LatestPosts';
 import Post from './containers/Post';
@@ -9,7 +10,7 @@ import Post from './containers/Post';
 import Header from './components/Header/HeaderLayout';
 import RootStyle from './App.styles';
 
-import { routes } from './utilities/constants';
+// import { routes } from './utilities/constants';
 
 // const LazyLatestPosts = lazy(() => import(/* webpackChunkName: "LatestPosts" */'./containers/LatestPosts'));
 // const LazyPost = lazy(() => import(/* webpackChunkName: "Post" */ './containers/Post'));

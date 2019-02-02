@@ -7,15 +7,15 @@ function UserInteractionHandlersHOC(WrappedComponent) {
     constructor(props) {
       super(props);
       this.state = { userOverElement: false };
-      this.handleCheckBoxHoverOn = this.handleCheckBoxHoverOn.bind(this);
-      this.handleCheckBoxHoverOff = this.handleCheckBoxHoverOff.bind(this);
+      this.handleUserOver = this.handleUserOver.bind(this);
+      this.handleUserLeave = this.handleUserLeave.bind(this);
     }
 
-    handleCheckBoxHoverOn() {
+    handleUserOver() {
       this.setState(() => ({ userOverElement: true }));
     }
 
-    handleCheckBoxHoverOff() {
+    handleUserLeave() {
       this.setState(() => ({ userOverElement: false }));
     }
 
@@ -31,10 +31,10 @@ function UserInteractionHandlersHOC(WrappedComponent) {
         <WrappedComponent
           userOver={userOverElement}
           handlers={{
-            onMouseEnter: this.handleCheckBoxHoverOn,
-            onFocus: this.handleCheckBoxHoverOn,
-            onMouseLeave: this.handleCheckBoxHoverOff,
-            onBlur: this.handleCheckBoxHoverOff,
+            onMouseEnter: this.handleUserOver,
+            onFocus: this.handleUserOver,
+            onMouseLeave: this.handleUserLeave,
+            onBlur: this.handleUserLeave,
           }}
           {...this.props}
         />

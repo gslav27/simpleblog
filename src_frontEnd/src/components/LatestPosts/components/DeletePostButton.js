@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Delete from '@material-ui/icons/Delete';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 
-import UserInteractionHandlersHOC from '../../../hocs/UserInteractionHandlersHOC';
-import Button from '../../UI/IconButton';
+import UserInteractionHandlersHOC from '_Hocs_/UserInteractionHandlersHOC';
+import Button from '_Ui_/IconButton';
 
 
 const DeletePostButton = props => (

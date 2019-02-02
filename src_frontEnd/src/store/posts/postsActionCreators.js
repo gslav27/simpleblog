@@ -1,6 +1,7 @@
+import { DB } from '_Utils_/constants';
+import getFetchObj from '_Utils_/getters/getFetchObj_RestDB';
+
 import * as types from './postsActionTypes';
-import { DB } from '../../utilities/constants';
-import getFetchObj from '../../utilities/getters/getFetchObj_RestDB';
 
 
 export const getLatestPosts = () => ({

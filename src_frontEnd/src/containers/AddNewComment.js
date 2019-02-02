@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
+import { newPostCommentInputs as inputs } from '_Utils_/constants';
+import RenderForm from '_Hocs_/RenderForm';
 import CreateMainCommentButton from '../components/Post/components/CreateMainCommentButton';
 import CreateCommentButton from '../components/Post/components/CreateCommentButton';
 import NewCommentForm from '../components/Post/components/NewCommentForm';
-import RenderForm from '../hocs/RenderForm';
 
-import { newPostCommentInputs as inputs } from '../utilities/constants';
 
 
 const getOpenFormButton = ({ commentType, onClick }) => ((commentType === 'main')

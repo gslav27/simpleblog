@@ -1,9 +1,10 @@
+import getArrayWithReplacedMockItem from '_Utils_/getters/getArrayWithReplacedMockItem';
+import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFirst';
+
 import * as types from './postsActionTypes';
 import { SUCCESS, START, FAIL } from '../actionTypes';
 
 import { getTenLatestItems } from './postsSelectors';
-import getArrayWithReplacedMockItem from '../../utilities/getters/getArrayWithReplacedMockItem';
-import getSortedByDateNewestFirst from '../../utilities/getters/getSortedByDate_NewestFirst';
 
 
 const initialState = {

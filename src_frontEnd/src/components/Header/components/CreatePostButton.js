@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Add from '@material-ui/icons/Add';
 import AddCircle from '@material-ui/icons/AddCircle';
 
-import UserInteractionHandlersHOC from '../../../hocs/UserInteractionHandlersHOC';
-import IconButton from '../../UI/IconButton';
+import theme from '_Utils_/themes';
+import UserInteractionHandlersHOC from '_Hocs_/UserInteractionHandlersHOC';
+import IconButton from '_Ui_/IconButton';
 
-import theme from '../../../utilities/themes';
 
 
 const AddPostButton = props => (

@@ -1,16 +1,25 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
+import Spinner from '_Ui_/Spinner';
 import PostCard from './components/PostCard';
 import Comments from './components/Comments';
 import AddNewComment from '../../containers/AddNewComment';
-import Spinner from '../UI/Spinner';
 
 
-const PostLayout = ({ post, comments, ...props }) => (
-  <section>
+const Section = styled.section`
+  height: ${({ loading }) => (loading ? '85vh' : 'unset')};
+`;
+
+
+const PostLayout = ({ post, comments, postLoading, ...props }) => (
+  <Section
+    loading={postLoading}
+    aria-busy={postLoading}
+  >
     {
-      props.postLoading
+      postLoading
         ? <Spinner />
         : (
           <Fragment>
@@ -24,7 +33,7 @@ const PostLayout = ({ post, comments, ...props }) => (
           </Fragment>
         )
     }
-  </section>
+  </Section>
 );
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import IconButtonAddComment from '../../UI/IconButtonAddComment';
+import IconButtonAddComment from '_Ui_/IconButtonAddComment';
 
 
 

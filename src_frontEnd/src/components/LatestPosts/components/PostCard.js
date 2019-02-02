@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { routes } from '_Utils_/constants';
+import Spinner from '_Ui_/Spinner';
 import DeletePostButton from './DeletePostButton';
-import Spinner from '../../UI/Spinner';
 
-import { routes } from '../../../utilities/constants';
 
 
 const Container = styled.section`

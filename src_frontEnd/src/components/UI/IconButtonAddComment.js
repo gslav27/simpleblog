@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ModeCommentOutlined from '@material-ui/icons/ModeCommentOutlined';
 import AddComment from '@material-ui/icons/AddComment';
 
-import UserInteractionHandlersHOC from '../../hocs/UserInteractionHandlersHOC';
+import UserInteractionHandlersHOC from '_Hocs_/UserInteractionHandlersHOC';
 import IconButton from './IconButton';
 
 

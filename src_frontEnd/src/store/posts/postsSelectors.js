@@ -1,4 +1,4 @@
-import getSortedByDateNewestFirst from '../../utilities/getters/getSortedByDate_NewestFirst';
+import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFirst';
 
 
 // SELECTORS FOR APP STORE DATA
