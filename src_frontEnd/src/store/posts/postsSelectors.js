@@ -1,4 +1,5 @@
 import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFirst';
+import getItemsWithoutSomeKeys from '_Utils_/getters/getItemsWithoutSomeKeys';
 
 
 // SELECTORS FOR APP STORE DATA
@@ -13,4 +14,7 @@ export const getCommentsLoadingStatus = state => state.posts.loading.comments;
 
 
 // SELECTORS FOR REDUCER
-export const getTenLatestItems = posts => getSortedByDateNewestFirst(posts).slice(0, 10);
+export const getTenLatestPosts = (items) => {
+  const tenLatestPosts = getSortedByDateNewestFirst(items).slice(0, 10);
+  return getItemsWithoutSomeKeys(tenLatestPosts, ['body']);
+};

@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { currentPostCommentsPropType } from '_Utils_/types/types';
 import Spinner from '_Ui_/Spinner';
 import Comment from './Comment';
 
@@ -35,7 +36,7 @@ const Text = styled.p`
 `;
 
 
-const CommentsList = ({ comments, onDeleteComment }) => (
+export const CommentsList = ({ comments, onDeleteComment }) => (
   comments.length
     ? (
       comments.map(props => (
@@ -66,16 +67,9 @@ const CommentsSection = ({ comments, commentsLoading, onDeleteComment }) => (
 
 
 CommentsSection.propTypes = {
-  comments: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      body: PropTypes.string,
-      author: PropTypes.string,
-      date: PropTypes.string,
-    }),
-  ).isRequired,
-  commentsLoading: PropTypes.bool.isRequired,
-  onDeleteComment: PropTypes.func.isRequired,
+  comments:         currentPostCommentsPropType.isRequired,
+  commentsLoading:  PropTypes.bool.isRequired,
+  onDeleteComment:  PropTypes.func.isRequired,
 };
 
 

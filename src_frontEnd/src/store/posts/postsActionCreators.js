@@ -1,4 +1,4 @@
-import { DB } from '_Utils_/constants';
+import { DB } from '_Utils_/constants/constants';
 import getFetchObj from '_Utils_/getters/getFetchObj_RestDB';
 
 import * as types from './postsActionTypes';

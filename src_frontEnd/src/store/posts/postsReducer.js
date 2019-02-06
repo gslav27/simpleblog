@@ -4,7 +4,7 @@ import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFi
 import * as types from './postsActionTypes';
 import { SUCCESS, START, FAIL } from '../actionTypes';
 
-import { getTenLatestItems } from './postsSelectors';
+import { getTenLatestPosts } from './postsSelectors';
 
 
 const initialState = {
@@ -28,7 +28,7 @@ export default function (state = initialState, { type, payload }) {
     case (types.GET_LATEST_POSTS + SUCCESS):
       return {
         ...state,
-        latestPosts: getTenLatestItems(payload),
+        latestPosts: getTenLatestPosts(payload),
         loading: { ...state.loading, latestPosts: false },
       };
     case (types.GET_POST_DATA + SUCCESS):

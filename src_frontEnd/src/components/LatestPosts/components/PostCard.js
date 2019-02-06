@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { routes } from '_Utils_/constants';
+import { PostPropsData } from '_Utils_/types/types';
+import { routes } from '_Utils_/constants/constants';
 import Spinner from '_Ui_/Spinner';
 import DeletePostButton from './DeletePostButton';
 
@@ -110,26 +111,11 @@ const PostCard = ({ title, description, author, date, onDelete, id, _id }) => (
 );
 
 PostCard.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  author: PropTypes.string,
-  date: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),                     // 'id' is postId for Router and connection between PostComments & PostItems
-  _id: PropTypes.string,  // '_id' is item's REST API (restdb) database id
+  ...PostPropsData.types,
 };
 
-PostCard.defaultProps = {
-  title: '',
-  description: '',
-  author: '',
-  date: '',
-  id: '',
-  _id: '',
-};
+PostCard.defaultProps = PostPropsData.defaultValues;
 
 
 export default memo(PostCard);

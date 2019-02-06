@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uniqid from 'uniqid';
 
-import { newPostFormInputs as inputs } from '_Utils_/constants';
+import { newPostFormInputs as inputs } from '_Utils_/constants/constants';
 import getCurrentDate from '_Utils_/getters/getCurrentDate';
 import RenderForm from '_Hocs_/RenderForm';
 import { postNewPost } from '../store/posts/postsActionCreators';

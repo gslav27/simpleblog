@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import { CurrentPostPropsData } from '_Utils_/types/types';
 
 
 const Article = styled.article`
@@ -32,24 +33,30 @@ const Text = styled.p`
 `;
 
 
+
+export const Body = ({ children: text }) => {
+  const paragraphs = text.split('\n');
+  // console.log(paragraphs);
+  return (
+    <>
+      {paragraphs.map((p, i) => <Text key={i}>{p}</Text>)}
+    </>
+  );
+};
+
+
 const PostCard = ({ title, author, date, body }) => (
   <Article>
     <Title>{title}</Title>
     <SubTitle>by {author}</SubTitle>
     <SubTitle>{date}</SubTitle>
     <Divider />
-    <Text>{body}</Text>
+    <Body>{body}</Body>
     <Divider height='10px' />
   </Article>
 );
 
 
-PostCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-};
-
+PostCard.propTypes = CurrentPostPropsData.getTypesSetToRequired();
 
 export default memo(PostCard);

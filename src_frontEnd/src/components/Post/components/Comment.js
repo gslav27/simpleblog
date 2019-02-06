@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { CurrentPostCommentPropsData } from '_Utils_/types/types';
 import DeleteButton from '_Ui_/IconButtonDelete';
 import Spinner from '_Ui_/Spinner';
 import AddNewComment from '../../../containers/AddNewComment';
@@ -101,17 +102,10 @@ const Comment = ({ author, date, body, onDelete, _id }) => (
 
 
 Comment.propTypes = {
-  _id:      PropTypes.string.isRequired,
-  body:     PropTypes.string,
-  author:   PropTypes.string,
-  date:     PropTypes.string,
+  ...CurrentPostCommentPropsData.getTypesSetToRequired(['_id']),
   onDelete: PropTypes.func.isRequired,
 };
 
-Comment.defaultProps = {
-  body: '',
-  author: '',
-  date: '',
-};
+Comment.defaultProps = CurrentPostCommentPropsData.defaultValues;
 
 export default memo(Comment);

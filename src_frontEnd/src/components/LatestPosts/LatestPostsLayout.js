@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { latestPostsPropType } from '_Utils_/types/types';
 import Spinner from '_Ui_/Spinner';
 import PostCard from './components/PostCard';
 
@@ -25,7 +26,7 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
       latestPostsLoading && !posts.length
         ? <Spinner />
         : (
-          posts.map(({ body, ...post }) => (
+          posts.map(post => (
             <PostCard
               key={post._id}
               onDelete={onPostDelete}
@@ -38,22 +39,9 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
 
 
 LatestPostsLayout.propTypes = {
+  posts:              latestPostsPropType.isRequired,
   latestPostsLoading: PropTypes.bool.isRequired,
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      id: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
-      title: PropTypes.string,
-      body: PropTypes.string,
-      description: PropTypes.string,
-      author: PropTypes.string,
-      date: PropTypes.string,
-    }),
-  ).isRequired,
-  onPostDelete: PropTypes.func.isRequired,
+  onPostDelete:       PropTypes.func.isRequired,
 };
 
 

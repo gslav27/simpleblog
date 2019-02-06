@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-import { newPostCommentInputs as inputs } from '_Utils_/constants';
+import { newPostCommentInputs as inputs } from '_Utils_/constants/constants';
 import RenderForm from '_Hocs_/RenderForm';
 import CreateMainCommentButton from '../components/Post/components/CreateMainCommentButton';
 import CreateCommentButton from '../components/Post/components/CreateCommentButton';

@@ -6,7 +6,7 @@ import { Router } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 
 import store, { history } from './store/store';
-import theme from './utilities/themes';
+import theme from './utilities/themes/themes';
 
 import App from './App';
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Add from '@material-ui/icons/Add';
 import AddCircle from '@material-ui/icons/AddCircle';
 
-import theme from '_Utils_/themes';
+import theme from '_Utils_/themes/themes';
 import UserInteractionHandlersHOC from '_Hocs_/UserInteractionHandlersHOC';
 import IconButton from '_Ui_/IconButton';
 

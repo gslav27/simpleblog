@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import {
+  currentPostPropType,
+  currentPostCommentsPropType,
+} from '_Utils_/types/types';
 import getCurrentDate from '_Utils_/getters/getCurrentDate';
+
 import {
   getCurrentPost,
   getCurrentPostComments,
@@ -67,8 +72,8 @@ class Post extends Component {
 
 
 Post.propTypes = {
-  currentPost:          PropTypes.object.isRequired,
-  currentPostComments:  PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentPost:          currentPostPropType.isRequired,
+  currentPostComments:  currentPostCommentsPropType.isRequired,
   postLoading:          PropTypes.bool.isRequired,
   commentsLoading:      PropTypes.bool.isRequired,
   match:                PropTypes.shape({ params: PropTypes.shape({ postId: PropTypes.string }) }).isRequired,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import theme from '_Utils_/themes';
+import theme from '_Utils_/themes/themes';
 import UserInteractionHandlersHOC from '_Hocs_/UserInteractionHandlersHOC';
 import IconButtonAddComment from '_Ui_/IconButtonAddComment';
 

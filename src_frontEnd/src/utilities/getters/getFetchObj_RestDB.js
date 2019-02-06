@@ -1,4 +1,4 @@
-import { DB } from '../constants';
+import { DB } from '../constants/constants';
 
 export default (method, bodyData) => ({
   method,

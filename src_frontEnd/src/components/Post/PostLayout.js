@@ -2,6 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import {
+  currentPostPropType,
+  currentPostCommentsPropType,
+} from '_Utils_/types/types';
 import Spinner from '_Ui_/Spinner';
 import PostCard from './components/PostCard';
 import Comments from './components/Comments';
@@ -38,17 +42,12 @@ const PostLayout = ({ post, comments, postLoading, ...props }) => (
 
 
 PostLayout.propTypes = {
-  postLoading: PropTypes.bool.isRequired,
-  commentsLoading: PropTypes.bool.isRequired,
-  post: PropTypes.shape({
-    title: PropTypes.string,
-    body: PropTypes.string,
-    author: PropTypes.string,
-    date: PropTypes.string,
-  }).isRequired,
-  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  handleAddNewComment: PropTypes.func.isRequired,
-  handleDeleteComment: PropTypes.func.isRequired,
+  post:                 currentPostPropType.isRequired,
+  comments:             currentPostCommentsPropType.isRequired,
+  postLoading:          PropTypes.bool.isRequired,
+  commentsLoading:      PropTypes.bool.isRequired,
+  handleAddNewComment:  PropTypes.func.isRequired,
+  handleDeleteComment:  PropTypes.func.isRequired,
 };
 
 

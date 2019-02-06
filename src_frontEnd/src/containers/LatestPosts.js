@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { latestPostsPropType } from '_Utils_/types/types';
+
 import {
   getLatestPosts,
   deletePost,
@@ -46,7 +48,7 @@ class LatestPosts extends Component {
 
 
 LatestPosts.propTypes = {
-  latestPosts:        PropTypes.arrayOf(PropTypes.object).isRequired,
+  latestPosts:        latestPostsPropType.isRequired,
   latestPostsLoading: PropTypes.bool.isRequired,
   getLatestPosts:     PropTypes.func.isRequired,
   deletePost:         PropTypes.func.isRequired,
