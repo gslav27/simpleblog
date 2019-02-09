@@ -24,5 +24,9 @@ export default {
       only screen and (min-resolution: 120dpi) {
         ${styles}
       }`,
+  widthXsMediaMixin:
+    styles => `@media (max-width: 479.95px) and (min-width: 0px) {
+      ${styles}
+    }`,
 };
 

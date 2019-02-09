@@ -13,10 +13,11 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 15px;
-  background: #fff;
-  padding: 20px;
+  padding: 15px 20px 10px;
   width: 90vw;
   max-width: 700px;
+  background: #fff;
+  border-radius: 4px;
 `;
 
 const Header = styled.div`

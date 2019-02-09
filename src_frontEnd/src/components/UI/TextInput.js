@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import themes from '_Utils_/themes/themes';
 
 
 export const InputContainer = styled.div`
@@ -10,23 +11,30 @@ export const InputContainer = styled.div`
   justify-content: space-between;
   align-items: baseline;
   margin-top: 5px;
-  & > * {
-    ${(({ direction }) => (direction === 'column') && `width: 100%`)};
-  };
+  ${themes.widthXsMediaMixin(`flex-direction: column;`)}
 `;
 
 export const Label = styled.label`
-  width: 5em;
+  min-width: 120px;
   text-align: ${({ textAlign }) => textAlign};
   margin-right: 7px;
   font-size: 1.2em;
-  color: ${({ value }) => (value ? 'green' : 'red')};
+  color: rgba(213, 0, 0, 1);
   ${({ theme, xl }) => xl && theme.boldUppercaseMixin(theme.color)};
+  ${themes.widthXsMediaMixin(`
+    min-width: unset;
+    font-size: 1em;
+  `)};
+  &:after {
+    content: ':';
+    ${({ value }) => value && `content: '✓'`};
+  };
 `;
 
 const Input = styled.input`
   flex: 1 1 auto;
   box-sizing: border-box;
+  width: 100%;
   font-size: 1em;
   padding: 2px 5px;
   height: 1.6em;
@@ -34,16 +42,22 @@ const Input = styled.input`
   border: none;
   color: #000;
   text-transform: ${({ textUppercase }) => (textUppercase ? 'uppercase' : 'unset')};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${themes.widthXsMediaMixin(`
+    &:invalid { border-bottom: 1px dotted #bbb; };
+  `)};
   &::placeholder {
     color: #999;
     font-style: italic;
     text-transform: none;
-  }
+  };
 `;
 
 const TextArea = styled.textarea`
   flex: 1 1 auto;
   box-sizing: border-box;
+  width: 100%;
   font-size: 1em;
   padding: 5px;
   ${({ theme }) => theme.inputTextMixin};
@@ -51,9 +65,12 @@ const TextArea = styled.textarea`
   border-top: 1px dashed #bbb;
   font-style: italic;
   color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${themes.widthXsMediaMixin(`border-top: unset`)};
   &::placeholder {
     color: #999;
-  }
+  };
 `;
 
 const InputElement = ({ element, rows, ...props }) => (
@@ -68,7 +85,7 @@ InputElement.propTypes = {
   rows: PropTypes.number,
 };
 
-InputElement.defaultProps = { rows: 7 };
+InputElement.defaultProps = { rows: 5 };
 
 
 function TextInput({ value, onChange, id, direction, label, labelXl, labelAlign, ...props }) {
@@ -81,7 +98,8 @@ function TextInput({ value, onChange, id, direction, label, labelXl, labelAlign,
         xl={labelXl}
         textAlign={labelAlign}
       >
-        {label}:
+        {/* {label}: */}
+        {label}
       </Label>
       <InputElement
         id={id}

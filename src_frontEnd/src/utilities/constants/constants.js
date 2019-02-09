@@ -22,19 +22,23 @@ export const newPostFormInputs = {
     placeholder: 'e.g. "AWESOME POST"',
     autoFocus: true,
     textUppercase: true,
+    required: true,
   },
   description: {
     element: 'input',
     placeholder: 'e.g. "Look throught all options for..."',
+    required: true,
   },
   author: {
     element: 'input',
     placeholder: 'e.g. "Stan Smith."',
+    required: true,
   },
   body: {
     element: 'textarea',
     placeholder: 'e.g. "lorem ipsum..."',
-    rows: 7,
+    rows: 5,
+    required: true,
   },
 };
 
@@ -44,9 +48,11 @@ export const newPostCommentInputs = {
     placeholder: 'your comment...',
     rows: 3,
     autoFocus: true,
+    required: true,
   },
   author: {
     element: 'input',
     placeholder: 'your name...',
+    required: true,
   },
 };
