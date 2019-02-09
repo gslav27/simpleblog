@@ -22,16 +22,11 @@ import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
 class LatestPosts extends Component {
   constructor(props) {
     super(props);
-    this.handleOpenPost = this.handleOpenPost.bind(this);
     this.handleDeletePost = this.handleDeletePost.bind(this);
   }
 
   componentDidMount() {
     this.props.getLatestPosts();
-  }
-
-  handleOpenPost(postData) {
-    this.props.setAvailableCurrentPostData(postData);
   }
 
   async handleDeletePost(_id) {
@@ -46,7 +41,7 @@ class LatestPosts extends Component {
       <LatestPostsLayout
         posts={latestPosts}
         latestPostsLoading={latestPostsLoading}
-        onPostOpen={this.handleOpenPost}
+        onPostOpen={this.props.setAvailableCurrentPostData}
         onPostDelete={this.handleDeletePost}
       />
     );
