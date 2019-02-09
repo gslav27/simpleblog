@@ -152,6 +152,11 @@ export default function (state = initialState, { type, payload }) {
     
 
     // OTHER ----------------------------------------------------
+    case types.SET_AVAILABLE_POST_DATA:
+      return {
+        ...state,
+        currentPost: payload,
+      };
     case types.CLEAN_UP_CURRENT_POST:
       return {
         ...state,

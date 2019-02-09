@@ -55,4 +55,10 @@ export const deleteComment = dbCommentId => ({
 });
 
 
+export const setAvailableCurrentPostData = postData => ({
+  type: types.SET_AVAILABLE_POST_DATA,
+  payload: postData,
+});
+
+
 export const cleanUpCurrentPost = () => ({ type: types.CLEAN_UP_CURRENT_POST });

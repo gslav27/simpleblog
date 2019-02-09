@@ -6,6 +6,7 @@ import { latestPostsPropType } from '_Utils_/types/types';
 
 import {
   getLatestPosts,
+  setAvailableCurrentPostData,
   deletePost,
 } from '../store/posts/postsActionCreators';
 
@@ -21,11 +22,16 @@ import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
 class LatestPosts extends Component {
   constructor(props) {
     super(props);
+    this.handleOpenPost = this.handleOpenPost.bind(this);
     this.handleDeletePost = this.handleDeletePost.bind(this);
   }
 
   componentDidMount() {
     this.props.getLatestPosts();
+  }
+
+  handleOpenPost(postData) {
+    this.props.setAvailableCurrentPostData(postData);
   }
 
   async handleDeletePost(_id) {
@@ -40,6 +46,7 @@ class LatestPosts extends Component {
       <LatestPostsLayout
         posts={latestPosts}
         latestPostsLoading={latestPostsLoading}
+        onPostOpen={this.handleOpenPost}
         onPostDelete={this.handleDeletePost}
       />
     );
@@ -48,10 +55,11 @@ class LatestPosts extends Component {
 
 
 LatestPosts.propTypes = {
-  latestPosts:        latestPostsPropType.isRequired,
-  latestPostsLoading: PropTypes.bool.isRequired,
-  getLatestPosts:     PropTypes.func.isRequired,
-  deletePost:         PropTypes.func.isRequired,
+  latestPosts:                  latestPostsPropType.isRequired,
+  latestPostsLoading:           PropTypes.bool.isRequired,
+  getLatestPosts:               PropTypes.func.isRequired,
+  setAvailableCurrentPostData:  PropTypes.func.isRequired,
+  deletePost:                   PropTypes.func.isRequired,
 };
 
 
@@ -63,6 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getLatestPosts,
+  setAvailableCurrentPostData,
   deletePost,
 };
 

@@ -35,13 +35,19 @@ class Post extends Component {
 
   async componentDidMount() {
     const { match, getPostData, getPostComments } = this.props;
-    await getPostData(match.params.postId);
     window.scrollTo(0, 0);
+    this.handleDocumentTitle();
+    await getPostData(match.params.postId);
     getPostComments(match.params.postId);
+  }
+
+  componentDidUpdate() {
+    this.handleDocumentTitle();
   }
 
   componentWillUnmount() {
     this.props.cleanUpCurrentPost();
+    document.title = 'SimpleBlog';
   }
 
   handleAddNewComment({ text: body, author }) {
@@ -54,6 +60,11 @@ class Post extends Component {
       body,
     };
     postNewComment(data);
+  }
+
+  handleDocumentTitle() {
+    const { currentPost } = this.props;
+    document.title = (currentPost.title || 'SimpleBlog');
   }
 
   render() {

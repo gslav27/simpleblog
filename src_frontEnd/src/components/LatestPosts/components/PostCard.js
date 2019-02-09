@@ -85,24 +85,28 @@ const FooterText = styled.div`
 `;
 
 
-const PostCard = ({ title, description, author, date, onDelete, id, _id }) => (
+const PostCard = ({ onOpen, onDelete, ...props }) => (
   <Container>
     {
-      !title
+      !props.title
         ? <Spinner size={35} />
         : (
           <>
-            <StyledLink to={`${process.env.PUBLIC_URL}${routes.posts}/${id}`} title='read article' />
+            <StyledLink
+              to={`${process.env.PUBLIC_URL}${routes.posts}/${props.id}`}
+              title='read article'
+              onClick={() => onOpen(props)}
+            />
             <Article title='read article'>
-              <Title>{title}</Title>
-              <Description>{description}</Description>
+              <Title>{props.title}</Title>
+              <Description>{props.description}</Description>
               <Footer>
-                <FooterText>{author}</FooterText>
-                <FooterText>{date}</FooterText>
+                <FooterText>{props.author}</FooterText>
+                <FooterText>{props.date}</FooterText>
               </Footer>
             </Article>
             <TopRightContainer>
-              <DeletePostButton onClick={() => onDelete(_id)} />
+              <DeletePostButton onClick={() => onDelete(props._id)} />
             </TopRightContainer>
           </>
         )
@@ -111,6 +115,7 @@ const PostCard = ({ title, description, author, date, onDelete, id, _id }) => (
 );
 
 PostCard.propTypes = {
+  onOpen: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   ...PostPropsData.types,
 };

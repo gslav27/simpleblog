@@ -6,11 +6,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const Container = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-height: 100%;
+flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   & * { 
     color: ${({ theme }) => theme.color}
   }

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -17,29 +17,36 @@ const Section = styled.section`
 `;
 
 
-const PostLayout = ({ post, comments, postLoading, ...props }) => (
-  <Section
-    loading={postLoading}
-    aria-busy={postLoading}
-  >
-    {
-      postLoading
-        ? <Spinner />
-        : (
-          <Fragment>
-            <PostCard {...post} />
-            <AddNewComment onSubmit={props.handleAddNewComment} commentType='main' />
-            <Comments
-              comments={comments}
-              commentsLoading={props.commentsLoading}
-              onDeleteComment={props.handleDeleteComment}
-            />
-          </Fragment>
-        )
-    }
-  </Section>
-);
+const PostLayout = ({ post, comments, postLoading, ...props }) => {
+  const CommentsBlock = () => (
+    < >
+      <AddNewComment onSubmit={props.handleAddNewComment} commentType='main' />
+      <Comments
+        comments={comments}
+        commentsLoading={props.commentsLoading}
+        onDeleteComment={props.handleDeleteComment}
+      />
+    </>
+  );
 
+  return (
+    <Section
+      loading={postLoading && !post.title}
+      aria-busy={postLoading}
+    >
+      {
+        postLoading && !post.title
+          ? <Spinner />
+          : (
+            < >
+              <PostCard bodyLoading={postLoading} {...post} />
+              { !postLoading && <CommentsBlock /> }
+            </>
+          )
+      }
+    </Section>
+  );
+};
 
 PostLayout.propTypes = {
   post:                 currentPostPropType.isRequired,

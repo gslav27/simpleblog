@@ -16,9 +16,9 @@ const Section = styled.section`
 `;
 
 
-const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
+const LatestPostsLayout = ({ latestPostsLoading, posts, onPostOpen, onPostDelete }) => (
   <Section
-    loading={latestPostsLoading}
+    loading={latestPostsLoading && !posts.length}
     // aria-describedby='loading'
     aria-busy={latestPostsLoading}
   >
@@ -29,6 +29,7 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
           posts.map(post => (
             <PostCard
               key={post._id}
+              onOpen={onPostOpen}
               onDelete={onPostDelete}
               {...post}
             />
@@ -41,6 +42,7 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostDelete }) => (
 LatestPostsLayout.propTypes = {
   posts:              latestPostsPropType.isRequired,
   latestPostsLoading: PropTypes.bool.isRequired,
+  onPostOpen:         PropTypes.func.isRequired,
   onPostDelete:       PropTypes.func.isRequired,
 };
 
