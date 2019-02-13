@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { PostPropsData } from '_Utils_/types/types';
 import { routes } from '_Utils_/constants/constants';
+import getLocaleDateString from '_Utils_/getters/getLocaleDateString';
 import Spinner from '_Ui_/Spinner';
 import DeletePostButton from './DeletePostButton';
 
@@ -102,7 +103,7 @@ const PostCard = ({ onOpen, onDelete, ...props }) => (
               <Description>{props.description}</Description>
               <Footer>
                 <FooterText>{props.author}</FooterText>
-                <FooterText>{props.date}</FooterText>
+                <FooterText>{getLocaleDateString(props.date)}</FooterText>
               </Footer>
             </Article>
             <TopRightContainer>

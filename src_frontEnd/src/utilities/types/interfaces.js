@@ -4,7 +4,7 @@ import { oneOfType, number, string } from 'prop-types';
 export const currentPostInterface = {
   title: string,
   author: string,
-  date: string,
+  date: number,
   body: string,
 };
 
@@ -16,7 +16,7 @@ export const postInterface = {
   ]),
   title: string,
   author: string,
-  date: string,
+  date: number,
   description: string,
 };
 
@@ -24,5 +24,5 @@ export const currentPostCommentInterface = {
   _id: string,
   body: string,
   author: string,
-  date: string,
+  date: number,
 };

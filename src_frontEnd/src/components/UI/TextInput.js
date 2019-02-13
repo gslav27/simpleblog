@@ -21,14 +21,14 @@ export const Label = styled.label`
   font-size: 1.2em;
   color: rgba(213, 0, 0, 1);
   ${({ theme, xl }) => xl && theme.boldUppercaseMixin(theme.color)};
-  ${themes.widthXsMediaMixin(`
-    min-width: unset;
-    font-size: 1em;
-  `)};
   &:after {
     content: ':';
     ${({ value }) => value && `content: '✓'`};
   };
+  ${themes.widthXsMediaMixin(`
+    min-width: unset;
+    font-size: 1em;
+  `)};
 `;
 
 const Input = styled.input`
@@ -44,14 +44,14 @@ const Input = styled.input`
   text-transform: ${({ textUppercase }) => (textUppercase ? 'uppercase' : 'unset')};
   overflow: hidden;
   text-overflow: ellipsis;
-  ${themes.widthXsMediaMixin(`
-    &:invalid { border-bottom: 1px dotted #bbb; };
-  `)};
   &::placeholder {
     color: #999;
     font-style: italic;
     text-transform: none;
   };
+  ${themes.widthXsMediaMixin(`
+    &:invalid { border-bottom: 1px dotted #bbb; };
+  `)};
 `;
 
 const TextArea = styled.textarea`
@@ -67,10 +67,10 @@ const TextArea = styled.textarea`
   color: #000;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${themes.widthXsMediaMixin(`border-top: unset`)};
   &::placeholder {
     color: #999;
   };
+  ${themes.widthXsMediaMixin(`border-top: unset`)};
 `;
 
 const InputElement = ({ element, rows, ...props }) => (
@@ -98,7 +98,6 @@ function TextInput({ value, onChange, id, direction, label, labelXl, labelAlign,
         xl={labelXl}
         textAlign={labelAlign}
       >
-        {/* {label}: */}
         {label}
       </Label>
       <InputElement

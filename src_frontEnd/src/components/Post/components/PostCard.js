@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { CurrentPostPropsData } from '_Utils_/types/types';
+import getLocaleDateString from '_Utils_/getters/getLocaleDateString';
 import TextLoadingPlaceholder from '_Ui_/TextLoadingPlaceholder';
 
 
@@ -50,7 +51,7 @@ const PostCard = ({ title, author, date, body, bodyLoading }) => (
   <Article loading={bodyLoading}>
     <Title>{title}</Title>
     <SubTitle>by {author}</SubTitle>
-    <SubTitle>{date}</SubTitle>
+    <SubTitle>{getLocaleDateString(date, 'DDMMYYYY-HHMMSS')}</SubTitle>
     <Divider />
     {
       bodyLoading

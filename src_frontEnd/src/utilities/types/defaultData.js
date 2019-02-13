@@ -6,5 +6,6 @@ export const postDefaultValues = {
   body: '',
   description: '',
   author: '',
-  date: '',
+  // date: '',
+  date: 0,
 };

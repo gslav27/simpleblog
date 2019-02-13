@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { CurrentPostCommentPropsData } from '_Utils_/types/types';
+import getLocaleDateString from '_Utils_/getters/getLocaleDateString';
 import DeleteButton from '_Ui_/IconButtonDelete';
 import Spinner from '_Ui_/Spinner';
 import AddNewComment from '../../../containers/AddNewComment';
@@ -77,7 +78,7 @@ const Comment = ({ author, date, body, onDelete, _id }) => (
           <Header>
             <HeaderText>
               <Title>{author}</Title>
-              <SubTitle>{date}</SubTitle>
+              <SubTitle>{getLocaleDateString(date, 'DDMMYYYY-HHMMSS')}</SubTitle>
             </HeaderText>
             <HeaderButtons>
               <DeleteButton
