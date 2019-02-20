@@ -10,18 +10,24 @@ import getCurrentDate from '_Utils_/getters/getCurrentDate';
 
 import {
   getCurrentPost,
-  getCurrentPostComments,
   getPostLoadingStatus,
-  getCommentsLoadingStatus,
 } from '../store/posts/postsSelectors';
 
 import {
+  getCurrentPostComments,
+  getCommentsLoadingStatus,
+} from '../store/comments/commentsSelectors';
+
+import {
   getPostData,
+  cleanUpCurrentPost,
+} from '../store/posts/postsActionCreators';
+
+import {
   getPostComments,
   postNewComment,
-  cleanUpCurrentPost,
   deleteComment,
-} from '../store/posts/postsActionCreators';
+} from '../store/comments/commentsActionCreators';
 
 import PostLayout from '../components/Post/PostLayout';
 

@@ -4,9 +4,9 @@
     "allowSyntheticDefaultImports": false,
     "baseUrl": "./",
     "paths": {
-      "_Utils_/*": [ "src/utilities/*" ],
-      "_Hocs_/*": [ "src/hocs/*" ],
-      "_Ui_/*": [ "src/components/UI*" ]
+      "_Utils_*": [ "src/utilities/*" ],
+      "_Hocs_*": [ "src/hocs/*" ],
+      "_Ui_*": [ "src/components/UI*" ]
     }
   },
   "exclude": [

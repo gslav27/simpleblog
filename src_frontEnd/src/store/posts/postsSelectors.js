@@ -1,3 +1,5 @@
+// import { createSelector } from 'reselect';
+
 import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFirst';
 import getItemsWithoutSomeKeys from '_Utils_/getters/getItemsWithoutSomeKeys';
 
@@ -5,12 +7,9 @@ import getItemsWithoutSomeKeys from '_Utils_/getters/getItemsWithoutSomeKeys';
 // SELECTORS FOR APP STORE DATA
 export const getLatestPosts = state => state.posts.latestPosts;
 export const getCurrentPost = state => state.posts.currentPost;
-export const getCurrentPostComments = state => state.posts.currentPostComments;
 
 export const getLatestPostsLoadingStatus = state => state.posts.loading.latestPosts;
 export const getPostLoadingStatus = state => state.posts.loading.post;
-export const getCommentsLoadingStatus = state => state.posts.loading.comments;
-
 
 
 // SELECTORS FOR REDUCER
