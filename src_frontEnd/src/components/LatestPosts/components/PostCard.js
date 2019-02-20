@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { PostPropsData } from '_Utils_/types/types';
 import { routes } from '_Utils_/constants/constants';
 import getLocaleDateString from '_Utils_/getters/getLocaleDateString';
-import Spinner from '_Ui_/Spinner';
+import Placeholder from '_Ui_/TextLoadingPlaceholder';
 import DeletePostButton from './DeletePostButton';
 
 
@@ -21,12 +21,15 @@ const Container = styled.section`
   border-radius: 3px;
   margin: 1em;
   max-width: 290px;
+  min-height: 400px;
   & button {
     visibility: hidden;
   };
   &:hover {
-    cursor: pointer;
-    box-shadow: 0px 0px 10px black;
+    ${({ loading }) => !loading && (`
+      cursor: pointer;
+      box-shadow: 0px 0px 10px black;
+    `)}
     & button {
       visibility: visible;
     };
@@ -44,6 +47,7 @@ const Article = styled.article`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
   padding: 5px 20px;
 `;
 
@@ -85,12 +89,32 @@ const FooterText = styled.div`
   font-weight: bold;
 `;
 
+const StyledPlaceholder = styled(Placeholder)`
+  margin: 10px 0px;
+`;
+
+
+const PostCardPlaceholder = () => (
+  <Article title='loading'>
+    <Title>
+      <StyledPlaceholder rows={['100%']} height='1.4em' />
+    </Title>
+    <div>
+      <StyledPlaceholder rows={['100%', '100%', '100%', '100%', '75%']} height='1em' />
+    </div>
+    <Footer>
+      <StyledPlaceholder width='40%' height='0.8em' />
+      <StyledPlaceholder width='25%' height='0.8em' />
+    </Footer>
+  </Article>
+);
+
 
 const PostCard = ({ onOpen, onDelete, ...props }) => (
-  <Container>
+  <Container loading={!props.title}>
     {
       !props.title
-        ? <Spinner size={35} />
+        ? <PostCardPlaceholder />
         : (
           <>
             <StyledLink

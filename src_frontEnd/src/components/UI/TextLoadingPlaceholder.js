@@ -25,16 +25,16 @@ const PlaceholderDiv = styled.div`
   margin: 10px auto;
 `;
 
-const TextLoadingPlaceholder = ({ rows, height, width }) => (
+const TextLoadingPlaceholder = ({ rows, height, width, className }) => (
   Array.isArray(rows)
     ? (
       rows.map((row, i) => (
-        <PlaceholderDiv key={i} height={height} width={row} />
+        <PlaceholderDiv key={i} height={height} width={row} className={className} />
       ))
     )
     : (
       Array(rows).fill(1).map((_, i) => (
-        <PlaceholderDiv key={i} height={height} width={width} />
+        <PlaceholderDiv key={i} height={height} width={width} className={className} />
       ))
     )
 );
