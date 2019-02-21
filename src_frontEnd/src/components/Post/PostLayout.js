@@ -9,6 +9,7 @@ import {
 import Spinner from '_Ui_/Spinner';
 import PostCard from './components/PostCard';
 import Comments from './components/Comments';
+// import Comments from '../../containers/Comments';
 import AddNewComment from '../../containers/AddNewComment';
 
 
@@ -17,36 +18,39 @@ const Section = styled.section`
 `;
 
 
-const PostLayout = ({ post, comments, postLoading, ...props }) => {
-  const CommentsBlock = () => (
-    < >
-      <AddNewComment onSubmit={props.handleAddNewComment} commentType='main' />
-      <Comments
-        comments={comments}
-        commentsLoading={props.commentsLoading}
-        onDeleteComment={props.handleDeleteComment}
-      />
-    </>
-  );
+const PostLayout = ({ post, comments, postLoading, ...props }) => (
+  <Section
+    loading={postLoading && !post.title}
+    aria-busy={postLoading}
+  >
+    {
+      postLoading && !post.title
+        ? <Spinner />
+        : (
+          < >
+            <PostCard bodyLoading={postLoading} {...post} />
+            {/* { !postLoading && <CommentsBlock /> } */}
+            {
+              !postLoading && (
+                < >
+                  <AddNewComment onSubmit={props.handleAddNewComment} commentType='main' />
+                  {/* <AddNewComment onSubmit={handleAddNewComment} commentType='main' /> */}
+                  <Comments
+                    comments={comments}
+                    commentsLoading={props.commentsLoading}
+                    onDeleteComment={props.handleDeleteComment}
+                    onAddSubcomment={props.handleAddNewComment}
+                  />
+                  {/* <Comments /> */}
+                </>
+              )
+            }
+          </>
+        )
+    }
+  </Section>
+);
 
-  return (
-    <Section
-      loading={postLoading && !post.title}
-      aria-busy={postLoading}
-    >
-      {
-        postLoading && !post.title
-          ? <Spinner />
-          : (
-            < >
-              <PostCard bodyLoading={postLoading} {...post} />
-              { !postLoading && <CommentsBlock /> }
-            </>
-          )
-      }
-    </Section>
-  );
-};
 
 PostLayout.propTypes = {
   post:                 currentPostPropType.isRequired,
