@@ -73,5 +73,6 @@ module.exports = {
         "react/jsx-indent": 2, //--fix
         "react/jsx-boolean-value": 2, //--fix
         "import/order": 2, //--fix
+        "import/prefer-default-export": 0,
     }
 };
