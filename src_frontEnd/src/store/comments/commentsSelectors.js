@@ -2,10 +2,10 @@ import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFi
 
 
 // SELECTORS FOR Comments APP STORE
-export const getCurrentPostMainComments = state => state.comments.mainComments;
-export const getComment = (state, _id) => state.comments.allComments[_id];
+export const getCurrentPostMainComments = state => state.comments.main;
+export const getComment = (state, _id) => state.comments.all[_id] || { _id: 'temp' };
 export const getCommentsLoadingStatus = state => state.comments.loading.comments;
-export const getCommentsQty = state => Object.keys(state.comments.allComments).length;
+export const getCommentsQty = state => Object.keys(state.comments.all).length;
 
 
 
@@ -30,12 +30,12 @@ export const updateAllSubCommentsQty = (type, _id, comments, allSubCommentsQty =
 
 /**
  * @param comments - array of all comments
- * @return obj { allComments{}, mainComments[] }
+ * @return obj { all{}, main[] }
  * where every comment has new property: "subComments" (array of subComment's _id)
  */
 export const getTransformedComments = (comments) => {
   const sortedComments = getSortedByDateNewestFirst(comments);
-  const mainComments = [];
+  const main = [];
   let transformedComments = sortedComments.reduce((acc, comment) => {
     acc[comment._id] = { ...comment };
     acc[comment._id].subComments = [];
@@ -44,7 +44,7 @@ export const getTransformedComments = (comments) => {
   }, {});
 
   sortedComments.forEach(({ _id, commentId }) => {
-    if (!commentId) return mainComments.push(_id);
+    if (!commentId) return main.push(_id);
     transformedComments[commentId].subComments.push(_id);
     transformedComments = {
       ...transformedComments,
@@ -53,8 +53,8 @@ export const getTransformedComments = (comments) => {
   });
 
   return ({
-    allComments: transformedComments,
-    mainComments,
+    all: transformedComments,
+    main,
   });
 };
 
@@ -65,7 +65,7 @@ export const getTransformedComments = (comments) => {
  * @param _id - comment id to remove
  * @return obj without unused comments (without deleted comment and all subComments)
  */
-export const getWithoutUnusedComments = (comments, _id) => {
+export const getAllWithoutUnusedComments = (comments, _id) => {
   const commentsToRemove = [_id];
   const addSubComments = subComments => subComments.forEach(
     (subComment_id) => {
