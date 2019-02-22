@@ -1,4 +1,4 @@
-import { shape, arrayOf } from 'prop-types';
+import { shape, arrayOf, string } from 'prop-types';
 
 import {
   postInterface,
@@ -18,4 +18,4 @@ export const currentPostPropType = shape(currentPostInterface);
 export const currentPostCommentPropType = shape(currentPostCommentInterface);
 
 export const latestPostsPropType = arrayOf(postPropType);
-export const currentPostCommentsPropType = arrayOf(currentPostCommentPropType);
+export const mainCommentsPropType = arrayOf(string);

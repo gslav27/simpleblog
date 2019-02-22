@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -8,17 +8,23 @@ import DeleteButton from '_Ui_/IconButtonDelete';
 import Spinner from '_Ui_/Spinner';
 import AddNewComment from '../../../containers/AddNewComment';
 
+import SubComments from './SubComments';
+
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: start;
+  width: 100%;
   min-height: 110px;
   margin: 0px 0px 10px;
   padding: 0px 15px;
-  border: 1px solid #eee;
+  border: ${({ type }) => (type === 'main' ? `1px solid #eee` : 'none')};
   border-radius: 3px;
+  &:last-of-type {
+    margin: 0px;
+  };
 `;
 
 const Header = styled.div`
@@ -62,51 +68,75 @@ const Body = styled.p`
 
 const Footer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-content: center;
+  justify-content: start;
+  align-items: center;
   width: 100%;
 `;
 
+const FooterText = styled.span`
+  font-size: 0.8em;
+  color: #999;
+`;
 
-const Comment = ({ author, date, body, onDelete, _id }) => (
-  <Container>
-    {
-    !author
-      ? <Spinner size={35} />
-      : (
-        <>
-          <Header>
-            <HeaderText>
-              <Title>{author}</Title>
-              <SubTitle>{getLocaleDateString(date, 'DDMMYYYY-HHMMSS')}</SubTitle>
-            </HeaderText>
-            <HeaderButtons>
-              <DeleteButton
-                type='button'
-                onClick={() => onDelete(_id)}
-                title='delete comment'
-              />
-            </HeaderButtons>
-          </Header>
-          <Body>{body}</Body>
-          <Footer>
-            <AddNewComment
-              onSubmit={(...params) => console.log(_id, params)}
-              commentType='subComment'
-            />
-          </Footer>
-        </>
-      )
-  }
-  </Container>
-);
+
+const Comment = ({
+  author,
+  date,
+  body,
+  onDelete,
+  onAddSubcomment,
+  subComments,
+  type,
+}) => {
+  console.log('render COMMENT component', subComments);
+  return (
+    <Container type={type}>
+      {
+        !author
+          ? <Spinner size={35} />
+          : (
+            <>
+              <Header>
+                <HeaderText>
+                  <Title>{author}</Title>
+                  <SubTitle>{getLocaleDateString(date, 'DDMMYYYY-HHMMSS')}</SubTitle>
+                </HeaderText>
+                <HeaderButtons>
+                  <DeleteButton
+                    type='button'
+                    onClick={onDelete}
+                    title='delete comment'
+                  />
+                </HeaderButtons>
+              </Header>
+              <Body>{body}</Body>
+
+              <Footer>
+                <AddNewComment
+                  onSubmit={onAddSubcomment}
+                  commentType='subComment'
+                />
+                <FooterText title='comments qty'> {subComments.length} </FooterText>
+              </Footer>
+
+              {!!subComments.length && (
+                <SubComments subComments={subComments} />
+              )}
+            </>
+          )
+      }
+    </Container>
+  );
+};
 
 
 Comment.propTypes = {
+  type: PropTypes.string,
   ...CurrentPostCommentPropsData.getTypesSetToRequired(['_id']),
   onDelete: PropTypes.func.isRequired,
+  onAddSubcomment: PropTypes.func.isRequired,
 };
 
-Comment.defaultProps = CurrentPostCommentPropsData.defaultValues;
+Comment.defaultProps = { type: 'main' };
 
-export default memo(Comment);
+export default Comment;

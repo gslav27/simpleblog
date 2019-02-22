@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { currentPostCommentsPropType } from '_Utils_/types/types';
+import { mainCommentsPropType } from '_Utils_/types/types';
 import Spinner from '_Ui_/Spinner';
-import Comment from './Comment';
+import Comment from '../../../containers/Comment';
 
 
 const Header = styled.h3`
@@ -36,14 +36,13 @@ const Text = styled.p`
 `;
 
 
-export const CommentsList = ({ comments, onDeleteComment }) => (
-  comments.length
+export const CommentsList = ({ mainComments }) => (
+  mainComments.length
     ? (
-      comments.map(props => (
+      mainComments.map(_id => (
         <Comment
-          key={props._id}
-          onDelete={onDeleteComment}
-          {...props}
+          key={_id}
+          _id={_id}
         />
       ))
     )
@@ -51,26 +50,26 @@ export const CommentsList = ({ comments, onDeleteComment }) => (
 );
 
 
-const CommentsSection = ({ comments, commentsLoading, onDeleteComment }) => (
+const CommentsSection = ({ mainComments, commentsQty, commentsLoading }) => (
   <>
     <Header>
       comments
-      <Qty>{comments.length}</Qty>
+      <Qty>{commentsQty}</Qty>
     </Header>
     {
       commentsLoading
         ? <Spinner />
-        : CommentsList({ comments, onDeleteComment })
+        : <CommentsList mainComments={mainComments} />
     }
   </>
 );
 
 
 CommentsSection.propTypes = {
-  comments:         currentPostCommentsPropType.isRequired,
+  mainComments:     mainCommentsPropType.isRequired,
   commentsLoading:  PropTypes.bool.isRequired,
-  onDeleteComment:  PropTypes.func.isRequired,
+  commentsQty:      PropTypes.number.isRequired,
 };
 
 
-export default memo(CommentsSection);
+export default CommentsSection;

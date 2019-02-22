@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export const postDefaultValues = {
   _id: '',
   id: '',
@@ -6,6 +5,7 @@ export const postDefaultValues = {
   body: '',
   description: '',
   author: '',
-  // date: '',
   date: 0,
+  commentId: '',              // for subComments
+  subComments: [],
 };

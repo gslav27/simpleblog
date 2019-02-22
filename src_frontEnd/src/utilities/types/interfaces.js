@@ -1,4 +1,4 @@
-import { oneOfType, number, string } from 'prop-types';
+import { oneOfType, number, string, arrayOf } from 'prop-types';
 
 
 export const currentPostInterface = {
@@ -24,5 +24,7 @@ export const currentPostCommentInterface = {
   _id: string,
   body: string,
   author: string,
+  commentId: string,
   date: number,
+  subComments: arrayOf(string),
 };

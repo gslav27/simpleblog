@@ -1,13 +1,18 @@
-import { getArrayWithReplacedMockItem } from '_Utils_/getters/getArrayWithReplacedMockItem';
-import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFirst';
+import { getObjectWithKeysExcluded } from '_Utils_/getters/getObjWithKeysExluded';
 
 import * as types from './commentsActionTypes';
 import { SUCCESS, START, FAIL } from '../actionTypes';
 
+import {
+  getWithoutUnusedComments,
+  getTransformedComments,
+} from './commentsSelectors';
+
 
 
 const initialState = {
-  currentPostComments: [],
+  allComments: {},
+  mainComments: [],
   loading: {
     comments: true,
     newComment: false,
@@ -17,39 +22,58 @@ const initialState = {
   },
 };
 
-export default function (state = initialState, { type, payload }) {
+
+export default function (state = initialState, { type, payload, initialPayload }) {
   switch (type) {
     // SUCCESS ----------------------------------------------------
     case (types.GET_POST_COMMENTS + SUCCESS):
       return {
         ...state,
-        currentPostComments: getSortedByDateNewestFirst(payload),
+        ...getTransformedComments(payload),
         loading: { ...state.loading, comments: false },
       };
     case (types.POST_NEW_COMMENT + SUCCESS):
       return {
         ...state,
-        currentPostComments: [payload, ...state.currentPostComments.slice(1)],
+        allComments: {
+          [payload._id]: { ...payload, subComments: [] },
+          ...getObjectWithKeysExcluded(state.allComments, ['temp']),
+        },
+        mainComments: [
+          payload._id, ...state.mainComments.slice(1),
+        ],
         loading: { ...state.loading, newComment: false },
       };
     case (types.POST_NEW_SUB_COMMENT + SUCCESS):
       return {
         ...state,
-        // currentPostComments: [payload, ...state.currentPostComments.slice(1)],
-        currentPostComments: [payload, ...state.currentPostComments.slice(1)],
+        allComments: {
+          [payload._id]: { ...payload, subComments: [] },
+          ...getObjectWithKeysExcluded(state.allComments, ['temp']),
+          [payload.commentId]: {
+            ...state.allComments[payload.commentId],
+            subComments: [payload._id, ...state.allComments[payload.commentId].subComments.slice(1)],
+          },
+        },
         loading: { ...state.loading, newSubComment: false },
       };
     case (types.DELETE_COMMENT + SUCCESS):
       return {
         ...state,
-        currentPostComments: state.currentPostComments.filter(({ _id }) => _id !== payload.result[0]),
+        mainComments: state.mainComments.filter(_id => _id !== payload.result[0]),
+        allComments: getWithoutUnusedComments(state.allComments, payload.result[0]),
         loading: { ...state.loading, deleteComment: false },
       };
-
     case (types.DELETE_SUB_COMMENT + SUCCESS):
       return {
         ...state,
-        currentPostComments: state.currentPostComments.filter(({ _id }) => _id !== payload.result[0]),
+        allComments: {
+          ...getWithoutUnusedComments(state.allComments, payload.result[0]),
+          [initialPayload.commentId]: {
+            ...state.allComments[initialPayload.commentId],
+            subComments: state.allComments[initialPayload.commentId].subComments.filter(_id => _id !== payload.result[0]),
+          },
+        },
         loading: { ...state.loading, deleteSubComment: false },
       };
 
@@ -63,32 +87,38 @@ export default function (state = initialState, { type, payload }) {
     case (types.POST_NEW_COMMENT + START):
       return {
         ...state,
-        currentPostComments: [{ _id: 'temp' }, ...state.currentPostComments],
+        mainComments: ['temp', ...state.mainComments],
+        allComments: { ...state.allComments, temp: { _id: 'temp' } },
         loading: { ...state.loading, newComment: true },
       };
     case (types.POST_NEW_SUB_COMMENT + START):
       return {
         ...state,
-        currentPostComments: [{ _id: 'temp', commentId: payload.commentId }, ...state.currentPostComments],
-        // currentPostComments: getArrayWithReplacedMockItem(state.currentPostComments, payload.commentId)
-        loading: { ...state.loading, newSubComment: true },
+        allComments: {
+          ...state.allComments,
+          temp: { _id: 'temp' },
+          [payload.commentId]: {
+            ...state.allComments[payload.commentId],
+            subComments: ['temp', ...state.allComments[payload.commentId].subComments],
+          },
+        },
+        loading: { ...state.loading, newComment: true },
       };
     case (types.DELETE_COMMENT + START):
-      return {
-        ...state,
-        currentPostComments: getArrayWithReplacedMockItem(state.currentPostComments, payload._id),
-        loading: { ...state.loading, deleteComment: true },
-      };
-
     case (types.DELETE_SUB_COMMENT + START):
       return {
         ...state,
-        currentPostComments: getArrayWithReplacedMockItem(
-          state.currentPostComments,
-          payload._id,
-          { commentId: payload.commentId },
-        ),
-        loading: { ...state.loading, deleteSubComment: true },
+        allComments: {
+          ...state.allComments,
+          [payload._id]: {
+            _id: payload._id,
+            subComments: state.allComments[payload._id].subComments,
+          },
+        },
+        loading: {
+          ...state.loading,
+          [type === (types.DELETE_COMMENT + START) ? 'deleteComment' : 'deleteSubComment']: true,
+        },
       };
 
 
@@ -101,26 +131,39 @@ export default function (state = initialState, { type, payload }) {
     case (types.POST_NEW_COMMENT + FAIL):
       return {
         ...state,
-        currentPostComments: state.currentPostComments.slice(1),            // test
+        mainComments: state.mainComments.slice(1),
+        allComments: getObjectWithKeysExcluded(state.allComments, ['temp']),
         loading: { ...state.loading, newComment: false },
       };
     case (types.POST_NEW_SUB_COMMENT + FAIL):
       return {
         ...state,
-        // currentPostComments: state.currentPostComments.slice(1),            // test
-        currentPostComments: state.currentPostComments.slice(1),            // test
+        allComments: {
+          ...getObjectWithKeysExcluded(state.allComments, ['temp']),
+          [payload.commentId]: {
+            ...state.allComments[payload.commentId],
+            subComments: state.allComments[payload.commentId].subComments.slice(1),
+          },
+        },
         loading: { ...state.loading, newSubComment: false },
       };
     case (types.DELETE_COMMENT + FAIL):
       return {
         ...state,
-        // currentPostComments: state.currentPostComments.filter(({ _id }) => _id !== payload.result[0]),
+        mainComments: state.mainComments.filter(_id => _id !== payload._id),
+        allComments: getWithoutUnusedComments(state.allComments, payload._id),
         loading: { ...state.loading, deleteComment: false },
       };
     case (types.DELETE_SUB_COMMENT + FAIL):
       return {
         ...state,
-        // currentPostComments: state.currentPostComments.filter(({ _id }) => _id !== payload.result[0]),
+        allComments: {
+          ...getWithoutUnusedComments(state.allComments, payload._id),
+          [initialPayload.commentId]: {
+            ...state.allComments[initialPayload.commentId],
+            subComments: state.allComments[initialPayload.commentId].subComments.filter(_id => _id !== payload.commentId),
+          },
+        },
         loading: { ...state.loading, deleteSubComment: false },
       };
     default:

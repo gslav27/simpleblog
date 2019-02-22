@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import {
   currentPostPropType,
-  currentPostCommentsPropType,
+  mainCommentsPropType,
 } from '_Utils_/types/types';
 import getCurrentDate from '_Utils_/getters/getCurrentDate';
 
@@ -14,8 +14,9 @@ import {
 } from '../store/posts/postsSelectors';
 
 import {
-  getCurrentPostComments,
   getCommentsLoadingStatus,
+  getCurrentPostMainComments,
+  getCommentsQty,
 } from '../store/comments/commentsSelectors';
 
 import {
@@ -26,7 +27,6 @@ import {
 import {
   getPostComments,
   postNewComment,
-  deleteComment,
 } from '../store/comments/commentsActionCreators';
 
 import PostLayout from '../components/Post/PostLayout';
@@ -40,7 +40,11 @@ class Post extends Component {
   }
 
   async componentDidMount() {
-    const { match, getPostData, getPostComments } = this.props;
+    const {
+      match,
+      getPostData,
+      getPostComments,
+    } = this.props;
     window.scrollTo(0, 0);
     this.handleDocumentTitle();
     await getPostData(match.params.postId);
@@ -56,16 +60,19 @@ class Post extends Component {
     document.title = 'SimpleBlog';
   }
 
-  handleAddNewComment({ text: body, author }) {
-    const { match, postNewComment } = this.props;
+  handleAddNewComment(data) {
+    const {
+      match,
+      postNewComment,
+    } = this.props;
     const { postId } = match.params;
-    const data = {
+    const mainData = {
       date: getCurrentDate(),
       postId: Number(postId) || postId,
-      author,
-      body,
+      author: data.author,
+      body: data.text,
     };
-    postNewComment(data);
+    postNewComment(mainData);
   }
 
   handleDocumentTitle() {
@@ -74,14 +81,22 @@ class Post extends Component {
   }
 
   render() {
-    const { currentPost, currentPostComments, ...otherProps } = this.props;
+    const {
+      currentPost,
+      mainComments,
+      commentsQty,
+      postLoading,
+      commentsLoading,
+    } = this.props;
+
     return (
       <PostLayout
         post={currentPost}
-        comments={currentPostComments}
+        mainComments={mainComments}
+        commentsQty={commentsQty}
+        postLoading={postLoading}
+        commentsLoading={commentsLoading}
         handleAddNewComment={this.handleAddNewComment}
-        handleDeleteComment={this.props.deleteComment}
-        {...otherProps}
       />
     );
   }
@@ -89,24 +104,25 @@ class Post extends Component {
 
 
 Post.propTypes = {
-  currentPost:          currentPostPropType.isRequired,
-  currentPostComments:  currentPostCommentsPropType.isRequired,
-  postLoading:          PropTypes.bool.isRequired,
-  commentsLoading:      PropTypes.bool.isRequired,
-  match:                PropTypes.shape({ params: PropTypes.shape({ postId: PropTypes.string }) }).isRequired,
-  getPostData:          PropTypes.func.isRequired,
-  getPostComments:      PropTypes.func.isRequired,
-  postNewComment:       PropTypes.func.isRequired,
-  deleteComment:        PropTypes.func.isRequired,
-  cleanUpCurrentPost:   PropTypes.func.isRequired,
+  currentPost:              currentPostPropType.isRequired,
+  mainComments:             mainCommentsPropType.isRequired,
+  commentsQty:              PropTypes.number.isRequired,
+  postLoading:              PropTypes.bool.isRequired,
+  commentsLoading:          PropTypes.bool.isRequired,
+  match:                    PropTypes.shape({ data: PropTypes.shape({ postId: PropTypes.string }) }).isRequired,
+  getPostData:              PropTypes.func.isRequired,
+  getPostComments:          PropTypes.func.isRequired,
+  postNewComment:           PropTypes.func.isRequired,
+  cleanUpCurrentPost:       PropTypes.func.isRequired,
 };
 
 
 const mapStateToProps = state => ({
-  currentPost:          getCurrentPost(state),
-  currentPostComments:  getCurrentPostComments(state),
-  postLoading:          getPostLoadingStatus(state),
-  commentsLoading:      getCommentsLoadingStatus(state),
+  currentPost:              getCurrentPost(state),
+  mainComments:             getCurrentPostMainComments(state),
+  commentsQty:              getCommentsQty(state),
+  postLoading:              getPostLoadingStatus(state),
+  commentsLoading:          getCommentsLoadingStatus(state),
 });
 
 
@@ -114,7 +130,6 @@ const mapDispatchToProps = {
   getPostData,
   getPostComments,
   postNewComment,
-  deleteComment,
   cleanUpCurrentPost,
 };
 

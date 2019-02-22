@@ -26,11 +26,11 @@ export const postNewSubComment = newCommentData => ({
 });
 
 
-export const deleteComment = dbCommentId => ({
+export const deleteComment = _id => ({
   type: types.DELETE_COMMENT,
-  callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}/${dbCommentId}`,
+  callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}/${_id}`,
   options: getFetchObj('DELETE'),
-  payload: { _id: dbCommentId },
+  payload: { _id },
 });
 
 
