@@ -37,7 +37,7 @@ export default function (state = initialState, { type, payload, initialPayload }
       return {
         ...state,
         allComments: {
-          [payload._id]: { ...payload, subComments: [] },
+          [payload._id]: { ...payload, subComments: [], allSubCommentsQty: 0 },
           ...getObjectWithKeysExcluded(state.allComments, ['temp']),
         },
         mainComments: [
