@@ -6,6 +6,7 @@ import { SUCCESS, START, FAIL } from '../actionTypes';
 import {
   getWithoutUnusedComments,
   getTransformedComments,
+  updateAllSubCommentsQty,
 } from './commentsSelectors';
 
 
@@ -48,12 +49,15 @@ export default function (state = initialState, { type, payload, initialPayload }
       return {
         ...state,
         allComments: {
-          [payload._id]: { ...payload, subComments: [] },
+          [payload._id]: { ...payload, subComments: [], allSubCommentsQty: 0 },
           ...getObjectWithKeysExcluded(state.allComments, ['temp']),
-          [payload.commentId]: {
-            ...state.allComments[payload.commentId],
-            subComments: [payload._id, ...state.allComments[payload.commentId].subComments.slice(1)],
-          },
+          ...updateAllSubCommentsQty('add', payload.commentId, {
+            ...state.allComments,
+            [payload.commentId]: {
+              ...state.allComments[payload.commentId],
+              subComments: [payload._id, ...state.allComments[payload.commentId].subComments.slice(1)],
+            },
+          }),
         },
         loading: { ...state.loading, newSubComment: false },
       };
@@ -69,10 +73,18 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         allComments: {
           ...getWithoutUnusedComments(state.allComments, payload.result[0]),
-          [initialPayload.commentId]: {
-            ...state.allComments[initialPayload.commentId],
-            subComments: state.allComments[initialPayload.commentId].subComments.filter(_id => _id !== payload.result[0]),
-          },
+          ...updateAllSubCommentsQty(
+            'subtract',
+            initialPayload.commentId,
+            {
+              ...state.allComments,
+              [initialPayload.commentId]: {
+                ...state.allComments[initialPayload.commentId],
+                subComments: state.allComments[initialPayload.commentId].subComments.filter(_id => _id !== payload.result[0]),
+              },
+            },
+            state.allComments[payload.result[0]].allSubCommentsQty,
+          ),
         },
         loading: { ...state.loading, deleteSubComment: false },
       };
@@ -113,6 +125,7 @@ export default function (state = initialState, { type, payload, initialPayload }
           [payload._id]: {
             _id: payload._id,
             subComments: state.allComments[payload._id].subComments,
+            allSubCommentsQty: state.allComments[payload._id].allSubCommentsQty,
           },
         },
         loading: {

@@ -86,8 +86,10 @@ const Comment = ({
   onDelete,
   onAddSubcomment,
   subComments,
+  allSubCommentsQty,
   type,
 }) => {
+  // const a = 0;
   console.log('render COMMENT component', subComments);
   return (
     <Container type={type}>
@@ -116,7 +118,7 @@ const Comment = ({
                   onSubmit={onAddSubcomment}
                   commentType='subComment'
                 />
-                <FooterText title='comments qty'> {subComments.length} </FooterText>
+                <FooterText title='comments qty'> {allSubCommentsQty} </FooterText>
               </Footer>
 
               {!!subComments.length && (

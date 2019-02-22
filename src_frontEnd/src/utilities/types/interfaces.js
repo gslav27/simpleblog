@@ -27,4 +27,5 @@ export const currentPostCommentInterface = {
   commentId: string,
   date: number,
   subComments: arrayOf(string),
+  allSubCommentsQty: number,
 };

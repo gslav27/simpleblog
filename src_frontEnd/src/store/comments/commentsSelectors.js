@@ -11,6 +11,24 @@ export const getCommentsQty = state => Object.keys(state.comments.allComments).l
 
 // SELECTORS FOR Comments REDUCER
 /**
+ * @param type {string} - operation type ("add" or "subtract")
+ * @param _id {string} - _id of comment to update "allSubCommentsQty"
+ * @param comments {object} - obj of all comments
+ * @param allSubCommentsQty {number} - number of allSubCommentsQty (required on type === 'subtract')
+ * @param updatedComments {object} - object of updated comments* (*for recursion)
+ * @returns {object} object of comments{} with updated "allSubCommentsQty"
+ */
+export const updateAllSubCommentsQty = (type, _id, comments, allSubCommentsQty = 0, updatedComments = {}) => {
+  const qty = (type === 'add') ? 1 : -1;
+  updatedComments[_id] = { ...comments[_id] };
+  updatedComments[_id].allSubCommentsQty += (qty - allSubCommentsQty);
+  if (!updatedComments[_id].commentId) return updatedComments;
+  return updateAllSubCommentsQty(type, updatedComments[_id].commentId, comments, allSubCommentsQty, updatedComments);
+};
+
+
+
+/**
  * @param comments - array of all comments
  * @return obj { allComments{}, mainComments[] }
  * where every comment has new property: "subComments" (array of subComment's _id)
@@ -18,16 +36,20 @@ export const getCommentsQty = state => Object.keys(state.comments.allComments).l
 export const getTransformedComments = (comments) => {
   const sortedComments = getSortedByDateNewestFirst(comments);
   const mainComments = [];
-  const transformedComments = sortedComments.reduce((acc, comment) => {
+  let transformedComments = sortedComments.reduce((acc, comment) => {
     acc[comment._id] = { ...comment };
     acc[comment._id].subComments = [];
+    acc[comment._id].allSubCommentsQty = 0;
     return acc;
   }, {});
 
   sortedComments.forEach(({ _id, commentId }) => {
-    commentId
-      ? transformedComments[commentId].subComments.push(_id)
-      : mainComments.push(_id);
+    if (!commentId) return mainComments.push(_id);
+    transformedComments[commentId].subComments.push(_id);
+    transformedComments = {
+      ...transformedComments,
+      ...updateAllSubCommentsQty('add', commentId, transformedComments),
+    };
   });
 
   return ({

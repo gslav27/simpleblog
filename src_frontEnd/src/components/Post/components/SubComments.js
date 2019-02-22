@@ -19,7 +19,7 @@ class SubComments extends PureComponent {
 
   render() {
     const { subComments } = this.props;
-    console.log('render SUB_COMMENTS');
+    // console.log('render SUB_COMMENTS');
     return (
       <Container>
         {

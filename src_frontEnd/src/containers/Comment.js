@@ -44,6 +44,7 @@ class CommentContainer extends Component {
 
 
   render() {
+    // console.log('CONTAINER Rseact.Children.count', React.Children.count(this.props.children));
     const {
       type,
       comment,
