@@ -51,8 +51,8 @@ class Post extends Component {
     getPostComments(match.params.postId);
   }
 
-  componentDidUpdate() {
-    this.handleDocumentTitle();
+  componentDidUpdate(prevProps) {
+    (this.props.currentPost.title !== prevProps.currentPost.title) && this.handleDocumentTitle();
   }
 
   componentWillUnmount() {
