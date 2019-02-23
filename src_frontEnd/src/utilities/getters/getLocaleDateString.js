@@ -1,4 +1,11 @@
-export default (data, type) => {
+/**
+ * convert numeric value to localeDateString
+ * @param {number} data - numeric value of the time for the specified date
+ * according to universal time
+ * @param {string} type - "MMDDYYYY-HHMMSS" or null
+ * @return {string} localeDateString
+ */
+export const getLocaleDateString = (data, type = '') => {
   const styles = {
     day: {
       year: 'numeric',
@@ -13,7 +20,7 @@ export default (data, type) => {
   };
   const dateType = Object.assign(
     styles.day,
-    type === 'DDMMYYYY-HHMMSS' ? styles.time : {},
+    type === 'MMDDYYYY-HHMMSS' ? styles.time : {},
   );
   return new Date(data).toLocaleDateString(undefined, dateType);
 };
