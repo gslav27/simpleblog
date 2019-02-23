@@ -22,7 +22,7 @@ export const postNewSubComment = newCommentData => ({
   type: types.POST_NEW_SUB_COMMENT,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}`,
   options: getFetchObj('POST', newCommentData),
-  payload: { commentId: newCommentData.commentId },
+  payload: { parentCommentId: newCommentData.parentCommentId },
 });
 
 
@@ -34,9 +34,9 @@ export const deleteComment = _id => ({
 });
 
 
-export const deleteSubComment = ({ _id, commentId }) => ({
+export const deleteSubComment = ({ _id, parentCommentId }) => ({
   type: types.DELETE_SUB_COMMENT,
   callAPI: `${DB.URL}/${DB.COLLECTIONS.comments}/${_id}`,
   options: getFetchObj('DELETE'),
-  payload: { _id, commentId },
+  payload: { _id, parentCommentId },
 });

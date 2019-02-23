@@ -24,7 +24,7 @@ export const currentPostCommentInterface = {
   _id: string,
   body: string,
   author: string,
-  commentId: string,
+  parentCommentId: string,
   date: number,
   subComments: arrayOf(string),
   allSubCommentsQty: number,

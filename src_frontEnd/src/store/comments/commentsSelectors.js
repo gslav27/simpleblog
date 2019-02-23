@@ -22,8 +22,8 @@ export const updateAllSubCommentsQty = (type, _id, comments, allSubCommentsQty =
   const qty = (type === 'add') ? 1 : -1;
   updatedComments[_id] = { ...comments[_id] };
   updatedComments[_id].allSubCommentsQty += (qty - allSubCommentsQty);
-  if (!updatedComments[_id].commentId) return updatedComments;
-  return updateAllSubCommentsQty(type, updatedComments[_id].commentId, comments, allSubCommentsQty, updatedComments);
+  if (!updatedComments[_id].parentCommentId) return updatedComments;
+  return updateAllSubCommentsQty(type, updatedComments[_id].parentCommentId, comments, allSubCommentsQty, updatedComments);
 };
 
 
@@ -43,12 +43,12 @@ export const getTransformedComments = (comments) => {
     return acc;
   }, {});
 
-  sortedComments.forEach(({ _id, commentId }) => {
-    if (!commentId) return main.push(_id);
-    transformedComments[commentId].subComments.push(_id);
+  sortedComments.forEach(({ _id, parentCommentId }) => {
+    if (!parentCommentId) return main.push(_id);
+    transformedComments[parentCommentId].subComments.push(_id);
     transformedComments = {
       ...transformedComments,
-      ...updateAllSubCommentsQty('add', commentId, transformedComments),
+      ...updateAllSubCommentsQty('add', parentCommentId, transformedComments),
     };
   });
 

@@ -69,14 +69,14 @@ export default function (state = initialState, { type, payload, initialPayload }
           ...state.all,
           ...updateAllSubCommentsQty(
             'add',
-            payload.commentId,
+            payload.parentCommentId,
             {
               ...state.all,
-              [payload.commentId]: {
-                ...state.all[payload.commentId],
+              [payload.parentCommentId]: {
+                ...state.all[payload.parentCommentId],
                 subComments: [
                   payload._id,
-                  ...state.all[payload.commentId].subComments.slice(1),
+                  ...state.all[payload.parentCommentId].subComments.slice(1),
                 ],
               },
             },
@@ -106,12 +106,12 @@ export default function (state = initialState, { type, payload, initialPayload }
           ...getAllWithoutUnusedComments(state.all, payload.result[0]),
           ...updateAllSubCommentsQty(
             'subtract',
-            initialPayload.commentId,
+            initialPayload.parentCommentId,
             {
               ...state.all,
-              [initialPayload.commentId]: {
-                ...state.all[initialPayload.commentId],
-                subComments: state.all[initialPayload.commentId].subComments.filter(_id => _id !== payload.result[0]),
+              [initialPayload.parentCommentId]: {
+                ...state.all[initialPayload.parentCommentId],
+                subComments: state.all[initialPayload.parentCommentId].subComments.filter(_id => _id !== payload.result[0]),
               },
             },
             state.all[payload.result[0]].allSubCommentsQty,
@@ -151,11 +151,11 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         all: {
           ...state.all,
-          [payload.commentId]: {
-            ...state.all[payload.commentId],
+          [payload.parentCommentId]: {
+            ...state.all[payload.parentCommentId],
             subComments: [
               'temp',
-              ...state.all[payload.commentId].subComments,
+              ...state.all[payload.parentCommentId].subComments,
             ],
           },
         },
@@ -203,9 +203,9 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         all: {
           ...state.all,
-          [payload.commentId]: {
-            ...state.all[payload.commentId],
-            subComments: state.all[payload.commentId].subComments.slice(1),
+          [payload.parentCommentId]: {
+            ...state.all[payload.parentCommentId],
+            subComments: state.all[payload.parentCommentId].subComments.slice(1),
           },
         },
         loading: {
@@ -229,9 +229,9 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         all: {
           ...getAllWithoutUnusedComments(state.all, payload._id),
-          [initialPayload.commentId]: {
-            ...state.all[initialPayload.commentId],
-            subComments: state.all[initialPayload.commentId].subComments.filter(_id => _id !== payload.commentId),
+          [initialPayload.parentCommentId]: {
+            ...state.all[initialPayload.parentCommentId],
+            subComments: state.all[initialPayload.parentCommentId].subComments.filter(_id => _id !== payload.parentCommentId),
           },
         },
         allQty: state.allQty - (1 + state.all[payload._id].allSubCommentsQty),

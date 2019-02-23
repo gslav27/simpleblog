@@ -32,13 +32,13 @@ class CommentContainer extends Component {
       author: data.author,
       body: data.text,
     };
-    postNewSubComment({ ...mainData, commentId: comment._id });
+    postNewSubComment({ ...mainData, parentCommentId: comment._id });
   }
   
   handleDeleteComment() {
     const { _id, comment } = this.props;
-    comment.commentId
-      ? this.props.deleteSubComment({ _id, commentId: comment.commentId })
+    comment.parentCommentId
+      ? this.props.deleteSubComment({ _id, parentCommentId: comment.parentCommentId })
       : this.props.deleteComment(_id);
   }
 

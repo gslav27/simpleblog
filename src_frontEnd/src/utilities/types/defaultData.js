@@ -6,7 +6,7 @@ export const postDefaultValues = {
   description: '',
   author: '',
   date: 0,
-  commentId: '',              // for subComments
+  parentCommentId: '',              // for subComments
   subComments: [],
   allSubCommentsQty: 0,
 };
