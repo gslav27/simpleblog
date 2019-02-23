@@ -1,6 +1,6 @@
 // import { createSelector } from 'reselect';
 
-import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFirst';
+import { getSortedByDateNewestFirst } from '_Utils_/getters/getSortedByDate_NewestFirst';
 import getItemsWithoutSomeKeys from '_Utils_/getters/getItemsWithoutSomeKeys';
 
 
