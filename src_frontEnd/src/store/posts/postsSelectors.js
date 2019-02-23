@@ -1,7 +1,4 @@
-// import { createSelector } from 'reselect';
-
 import { getSortedByDateNewestFirst } from '_Utils_/getters/getSortedByDate_NewestFirst';
-import getItemsWithoutSomeKeys from '_Utils_/getters/getItemsWithoutSomeKeys';
 
 
 // SELECTORS FOR APP STORE DATA
@@ -15,5 +12,11 @@ export const getPostLoadingStatus = state => state.posts.loading.post;
 // SELECTORS FOR REDUCER
 export const getTenLatestPosts = (items) => {
   const tenLatestPosts = getSortedByDateNewestFirst(items).slice(0, 10);
-  return getItemsWithoutSomeKeys(tenLatestPosts, ['body']);
+  return tenLatestPosts.map(post => (
+    Object.keys(post).reduce((modifiedPost, key) => {
+      if (key === 'body') return modifiedPost;
+      modifiedPost[key] = post[key];
+      return modifiedPost;
+    }, {})
+  ));
 };
