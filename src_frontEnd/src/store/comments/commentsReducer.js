@@ -12,6 +12,7 @@ import {
 const initialState = {
   all: {},
   main: [],
+  allQty: 0,
   loading: {
     comments: true,
     newComment: false,
@@ -29,6 +30,7 @@ export default function (state = initialState, { type, payload, initialPayload }
       return {
         ...state,
         ...getTransformedComments(payload),
+        allQty: payload.length,
         loading: {
           ...state.loading,
           comments: false,
@@ -49,6 +51,7 @@ export default function (state = initialState, { type, payload, initialPayload }
           payload._id,
           ...state.main.slice(1),
         ],
+        allQty: state.allQty + 1,
         loading: {
           ...state.loading,
           newComment: false,
@@ -79,6 +82,7 @@ export default function (state = initialState, { type, payload, initialPayload }
             },
           ),
         },
+        allQty: state.allQty + 1,
         loading: {
           ...state.loading,
           newSubComment: false,
@@ -89,6 +93,7 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         main: state.main.filter(_id => _id !== payload.result[0]),
         all: getAllWithoutUnusedComments(state.all, payload.result[0]),
+        allQty: state.allQty - (1 + state.all[payload.result[0]].allSubCommentsQty),
         loading: {
           ...state.loading,
           deleteComment: false,
@@ -112,6 +117,7 @@ export default function (state = initialState, { type, payload, initialPayload }
             state.all[payload.result[0]].allSubCommentsQty,
           ),
         },
+        allQty: state.allQty - (1 + state.all[payload.result[0]].allSubCommentsQty),
         loading: {
           ...state.loading,
           deleteSubComment: false,
@@ -212,6 +218,7 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         main: state.main.filter(_id => _id !== payload._id),
         all: getAllWithoutUnusedComments(state.all, payload._id),
+        allQty: state.allQty - (1 + state.all[payload._id].allSubCommentsQty),
         loading: {
           ...state.loading,
           deleteComment: false,
@@ -227,6 +234,7 @@ export default function (state = initialState, { type, payload, initialPayload }
             subComments: state.all[initialPayload.commentId].subComments.filter(_id => _id !== payload.commentId),
           },
         },
+        allQty: state.allQty - (1 + state.all[payload._id].allSubCommentsQty),
         loading: {
           ...state.loading,
           deleteSubComment: false,

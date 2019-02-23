@@ -5,7 +5,7 @@ import getSortedByDateNewestFirst from '_Utils_/getters/getSortedByDate_NewestFi
 export const getCurrentPostMainComments = state => state.comments.main;
 export const getComment = (state, _id) => state.comments.all[_id] || { _id: 'temp' };
 export const getCommentsLoadingStatus = state => state.comments.loading.comments;
-export const getCommentsQty = state => Object.keys(state.comments.all).length;
+export const getCommentsQty = state => state.comments.allQty;
 
 
 
@@ -29,7 +29,7 @@ export const updateAllSubCommentsQty = (type, _id, comments, allSubCommentsQty =
 
 
 /**
- * @param comments - array of all comments
+ * @param comments {array} - all comments
  * @return obj { all{}, main[] }
  * where every comment has new property: "subComments" (array of subComment's _id)
  */
