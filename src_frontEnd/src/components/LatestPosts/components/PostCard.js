@@ -23,6 +23,8 @@ const Container = styled.section`
   margin: 1em;
   max-width: 290px;
   min-height: 400px;
+  overflow: hidden;
+  overflow-wrap: break-word;
   & button {
     visibility: hidden;
   };
