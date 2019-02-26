@@ -31,6 +31,10 @@ import {
 
 import PostLayout from '../components/Post/PostLayout';
 
+// import Spinner from '_Ui_/Spinner';
+import PostCard from '../components/Post/components/PostCard';
+import Comments from '../components/Post/components/Comments';
+import AddNewComment from './AddNewComment';
 
 
 class Post extends Component {
@@ -91,12 +95,27 @@ class Post extends Component {
 
     return (
       <PostLayout
-        post={currentPost}
-        mainComments={mainComments}
-        commentsQty={commentsQty}
-        postLoading={postLoading}
-        commentsLoading={commentsLoading}
-        handleAddNewComment={this.handleAddNewComment}
+        postLoading={postLoading && !currentPost.title}
+        postBodyLoading={postLoading}
+        postSection={(
+          <PostCard
+            bodyLoading={postLoading}
+            {...currentPost}
+          />
+        )}
+        commentsSection={(
+          < >
+            <AddNewComment
+              onSubmit={this.handleAddNewComment}
+              commentType='main'
+            />
+            <Comments
+              mainComments={mainComments}
+              commentsQty={commentsQty}
+              commentsLoading={commentsLoading}
+            />
+          </>
+        )}
       />
     );
   }

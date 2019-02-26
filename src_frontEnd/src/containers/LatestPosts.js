@@ -17,6 +17,7 @@ import {
 } from '../store/posts/postsSelectors';
 
 import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
+import PostCard from '../components/LatestPosts/components/PostCard';
 
 
 
@@ -40,11 +41,18 @@ class LatestPosts extends Component {
 
     return (
       <LatestPostsLayout
-        posts={latestPosts}
         latestPostsLoading={latestPostsLoading}
-        postDeletion={postDeletion}
-        onPostOpen={this.props.setAvailableCurrentPostData}
-        onPostDelete={this.handleDeletePost}
+        postCards={
+          latestPosts.map(post => (
+            <PostCard
+              key={post._id}
+              postDeletion={!post.title && postDeletion}
+              onOpen={this.props.setAvailableCurrentPostData}
+              onDelete={this.handleDeletePost}
+              {...post}
+            />
+          ))
+        }
       />
     );
   }

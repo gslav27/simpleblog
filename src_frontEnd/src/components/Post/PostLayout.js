@@ -2,14 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {
-  currentPostPropType,
-  mainCommentsPropType,
-} from '_Utils_/types/types';
 import Spinner from '_Ui_/Spinner';
-import PostCard from './components/PostCard';
-import Comments from './components/Comments';
-import AddNewComment from '../../containers/AddNewComment';
+
 
 
 const Section = styled.section`
@@ -17,27 +11,18 @@ const Section = styled.section`
 `;
 
 
-const PostLayout = ({ post, postLoading, handleAddNewComment, ...otherProps }) => (
+const PostLayout = ({ postSection, commentsSection, postLoading, postBodyLoading }) => (
   <Section
-    loading={postLoading && !post.title}
+    loading={postLoading}
     aria-busy={postLoading}
   >
     {
-      postLoading && !post.title
+      postLoading
         ? <Spinner />
         : (
           < >
-            <PostCard bodyLoading={postLoading} {...post} />
-            {
-              !postLoading && (
-                < >
-                  <AddNewComment onSubmit={handleAddNewComment} commentType='main' />
-                  <Comments
-                    {...otherProps}
-                  />
-                </>
-              )
-            }
+            { postSection }
+            { !postBodyLoading && commentsSection }
           </>
         )
     }
@@ -46,12 +31,10 @@ const PostLayout = ({ post, postLoading, handleAddNewComment, ...otherProps }) =
 
 
 PostLayout.propTypes = {
-  post:                 currentPostPropType.isRequired,
-  mainComments:         mainCommentsPropType.isRequired,
-  commentsQty:          PropTypes.number.isRequired,
-  postLoading:          PropTypes.bool.isRequired,
-  commentsLoading:      PropTypes.bool.isRequired,
-  handleAddNewComment:  PropTypes.func.isRequired,
+  postLoading:        PropTypes.bool.isRequired,
+  postBodyLoading:    PropTypes.bool.isRequired,
+  postSection:        PropTypes.node.isRequired,
+  commentsSection:    PropTypes.node.isRequired,
 };
 
 
