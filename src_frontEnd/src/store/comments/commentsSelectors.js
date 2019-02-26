@@ -4,8 +4,11 @@ import { getSortedByDateNewestFirst } from '_Utils_/getters/getSortedByDate_Newe
 // SELECTORS FOR Comments APP STORE
 export const getCurrentPostMainComments = state => state.comments.main;
 export const getComment = (state, _id) => state.comments.all[_id] || { _id: 'temp' };
-export const getCommentsLoadingStatus = state => state.comments.loading.comments;
 export const getCommentsQty = state => state.comments.allQty;
+export const getCommentsLoadingStatus = state => state.comments.loading.comments;
+export const getCommentDeletionStatus = (state, _id) => (
+  state.comments.loading.deleteComment && !state.comments.all[_id].author
+);
 
 
 

@@ -18,7 +18,6 @@ const initialState = {
     newComment: false,
     newSubComment: false,
     deleteComment: false,
-    deleteSubComment: false,
   },
 };
 
@@ -120,7 +119,7 @@ export default function (state = initialState, { type, payload, initialPayload }
         allQty: state.allQty - (1 + state.all[payload.result[0]].allSubCommentsQty),
         loading: {
           ...state.loading,
-          deleteSubComment: false,
+          deleteComment: false,
         },
       };
 
@@ -178,7 +177,7 @@ export default function (state = initialState, { type, payload, initialPayload }
         },
         loading: {
           ...state.loading,
-          [type === (types.DELETE_COMMENT + START) ? 'deleteComment' : 'deleteSubComment']: true,
+          deleteComment: true,
         },
       };
 
@@ -237,7 +236,7 @@ export default function (state = initialState, { type, payload, initialPayload }
         allQty: state.allQty - (1 + state.all[payload._id].allSubCommentsQty),
         loading: {
           ...state.loading,
-          deleteSubComment: false,
+          deleteComment: false,
         },
       };
     default:

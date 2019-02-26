@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import getCurrentDate from '_Utils_/getters/getCurrentDate';
 import { currentPostCommentPropType } from '_Utils_/types/types';
 
-import { getComment } from '../store/comments/commentsSelectors';
+import {
+  getComment,
+  getCommentDeletionStatus,
+} from '../store/comments/commentsSelectors';
 
 import {
   postNewSubComment,
@@ -48,12 +51,14 @@ class CommentContainer extends Component {
     const {
       type,
       comment,
+      commentDeletion,
     } = this.props;
     return (
       <Comment
         type={type}
         onDelete={this.handleDeleteComment}
         onAddSubcomment={this.handleAddSubComment}
+        commentDeletion={commentDeletion}
         {...comment}
       />
     );
@@ -62,19 +67,22 @@ class CommentContainer extends Component {
 
 
 CommentContainer.propTypes = {
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  postNewSubComment: PropTypes.func.isRequired,
-  deleteComment: PropTypes.func.isRequired,
-  deleteSubComment: PropTypes.func.isRequired,
-
-  comment: currentPostCommentPropType.isRequired,
+  _id:                PropTypes.string.isRequired,
+  type:               PropTypes.string,
+  commentDeletion:    PropTypes.bool.isRequired,
+  postNewSubComment:  PropTypes.func.isRequired,
+  deleteComment:      PropTypes.func.isRequired,
+  deleteSubComment:   PropTypes.func.isRequired,
+  comment:            currentPostCommentPropType.isRequired,
 };
 
 
 CommentContainer.defaultProps = { type: 'main' };
 
-const mapStateToProps = (state, props) => ({ comment: getComment(state, props._id) });
+const mapStateToProps = (state, props) => ({
+  comment:          getComment(state, props._id),
+  commentDeletion:  getCommentDeletionStatus(state, props._id),
+});
 
 const mapDispatchToProps = {
   postNewSubComment,

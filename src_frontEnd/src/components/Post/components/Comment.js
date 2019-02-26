@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { CurrentPostCommentPropsData } from '_Utils_/types/types';
 import { getLocaleDateString } from '_Utils_/getters/getLocaleDateString';
 import DeleteButton from '_Ui_/IconButtonDelete';
+import TextPlaceholder from '_Ui_/TextLoadingPlaceholder';
 import Spinner from '_Ui_/Spinner';
 import AddNewComment from '../../../containers/AddNewComment';
 
@@ -78,65 +79,93 @@ const FooterText = styled.span`
   color: #999;
 `;
 
+const StyledPlaceholder = styled(TextPlaceholder)`
+  margin: 0px 0px 10px;
+`;
+
+
+
+const CommentTextPlaceholder = () => (
+  <>
+    <Header>
+      <HeaderText>
+        <Title><StyledPlaceholder rows={['100px']} height='1.2em' /></Title>
+        <SubTitle><StyledPlaceholder rows={['150px']} height='0.8em' /></SubTitle>
+      </HeaderText>
+    </Header>
+    <StyledPlaceholder rows={['100%']} height='1em' />
+    <Footer>
+      <StyledPlaceholder width='50px' height='0.8em' />
+    </Footer>
+  </>
+);
+
+
+
+export const CommentPlaceholder = ({ commentDeletion }) => (
+  commentDeletion
+    ? <Spinner size={35} />
+    : <CommentTextPlaceholder />
+);
+
+
 
 const Comment = ({
   author,
   date,
   body,
+  commentDeletion,
   onDelete,
   onAddSubcomment,
   subComments,
   allSubCommentsQty,
   type,
-}) => {
-  // const a = 0;
-  console.log('render COMMENT component', subComments);
-  return (
-    <Container type={type}>
-      {
-        !author
-          ? <Spinner size={35} />
-          : (
-            <>
-              <Header>
-                <HeaderText>
-                  <Title>{author}</Title>
-                  <SubTitle>{getLocaleDateString(date, 'MMDDYYYY-HHMMSS')}</SubTitle>
-                </HeaderText>
-                <HeaderButtons>
-                  <DeleteButton
-                    type='button'
-                    onClick={onDelete}
-                    title='delete comment'
-                  />
-                </HeaderButtons>
-              </Header>
-              <Body>{body}</Body>
-
-              <Footer>
-                <AddNewComment
-                  onSubmit={onAddSubcomment}
-                  commentType='subComment'
+}) => (
+  <Container type={type}>
+    {
+      !author
+        ? <CommentPlaceholder commentDeletion={commentDeletion} />
+        : (
+          <>
+            <Header>
+              <HeaderText>
+                <Title>{author}</Title>
+                <SubTitle>{getLocaleDateString(date, 'MMDDYYYY-HHMMSS')}</SubTitle>
+              </HeaderText>
+              <HeaderButtons>
+                <DeleteButton
+                  type='button'
+                  onClick={onDelete}
+                  title='delete comment'
                 />
-                <FooterText title='comments qty'> {allSubCommentsQty} </FooterText>
-              </Footer>
+              </HeaderButtons>
+            </Header>
+            <Body>{body}</Body>
 
-              {!!subComments.length && (
-                <SubComments subComments={subComments} />
-              )}
-            </>
-          )
-      }
-    </Container>
-  );
-};
+            <Footer>
+              <AddNewComment
+                onSubmit={onAddSubcomment}
+                commentType='subComment'
+              />
+              <FooterText title='comments qty'> {allSubCommentsQty} </FooterText>
+            </Footer>
+
+            {!!subComments.length && (
+              <SubComments subComments={subComments} />
+            )}
+          </>
+        )
+    }
+  </Container>
+);
 
 
 Comment.propTypes = {
-  type: PropTypes.string,
+  type:             PropTypes.string,
+  commentDeletion:  PropTypes.bool.isRequired,
+  onDelete:         PropTypes.func.isRequired,
+  onAddSubcomment:  PropTypes.func.isRequired,
   ...CurrentPostCommentPropsData.getTypesSetToRequired(['_id']),
-  onDelete: PropTypes.func.isRequired,
-  onAddSubcomment: PropTypes.func.isRequired,
 };
 
 Comment.defaultProps = { type: 'main' };
