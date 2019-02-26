@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { PostPropsData } from '_Utils_/types/types';
 import { routes } from '_Utils_/constants/constants';
 import { getLocaleDateString } from '_Utils_/getters/getLocaleDateString';
-import Placeholder from '_Ui_/TextLoadingPlaceholder';
+import TextPlaceholder from '_Ui_/TextLoadingPlaceholder';
+import Spinner from '_Ui_/Spinner';
 import DeletePostButton from './DeletePostButton';
 
 
@@ -89,12 +90,12 @@ const FooterText = styled.div`
   font-weight: bold;
 `;
 
-const StyledPlaceholder = styled(Placeholder)`
+const StyledPlaceholder = styled(TextPlaceholder)`
   margin: 10px 0px;
 `;
 
 
-const PostCardPlaceholder = () => (
+const PostCardTextPlaceholder = () => (
   <Article title='loading'>
     <Title>
       <StyledPlaceholder rows={['100%']} height='1.4em' />
@@ -110,38 +111,47 @@ const PostCardPlaceholder = () => (
 );
 
 
-const PostCard = ({ onOpen, onDelete, ...props }) => (
+export const PostCardPlaceholder = ({ postDeletion }) => (
+  postDeletion
+    ? <Spinner size={35} />
+    : <PostCardTextPlaceholder />
+);
+
+
+const PostCard = ({ postDeletion, onOpen, onDelete, ...props }) => (
   <Container loading={!props.title}>
     {
-      !props.title
-        ? <PostCardPlaceholder />
-        : (
-          <>
-            <StyledLink
-              to={`${process.env.PUBLIC_URL}${routes.posts}/${props.id}`}
-              title='read article'
-              onClick={() => onOpen(props)}
-            />
-            <Article title='read article'>
-              <Title>{props.title}</Title>
-              <Description>{props.description}</Description>
-              <Footer>
-                <FooterText>{props.author}</FooterText>
-                <FooterText>{getLocaleDateString(props.date)}</FooterText>
-              </Footer>
-            </Article>
-            <TopRightContainer>
-              <DeletePostButton onClick={() => onDelete(props._id)} />
-            </TopRightContainer>
-          </>
-        )
-    }
+    !props.title
+      ? <PostCardPlaceholder postDeletion={postDeletion} />
+      : (
+        <>
+          <StyledLink
+            to={`${process.env.PUBLIC_URL}${routes.posts}/${props.id}`}
+            title='read article'
+            onClick={() => onOpen(props)}
+          />
+          <Article title='read article'>
+            <Title>{props.title}</Title>
+            <Description>{props.description}</Description>
+            <Footer>
+              <FooterText>{props.author}</FooterText>
+              <FooterText>{getLocaleDateString(props.date)}</FooterText>
+            </Footer>
+          </Article>
+          <TopRightContainer>
+            <DeletePostButton onClick={() => onDelete(props._id)} />
+          </TopRightContainer>
+        </>
+      )
+  }
   </Container>
 );
 
+
 PostCard.propTypes = {
-  onOpen: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  postDeletion: PropTypes.bool.isRequired,
+  onOpen:       PropTypes.func.isRequired,
+  onDelete:     PropTypes.func.isRequired,
   ...PostPropsData.types,
 };
 

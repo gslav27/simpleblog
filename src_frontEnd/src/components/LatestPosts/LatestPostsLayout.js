@@ -13,7 +13,7 @@ const Section = styled.section`
 `;
 
 
-const LatestPostsLayout = ({ latestPostsLoading, posts, onPostOpen, onPostDelete }) => (
+const LatestPostsLayout = ({ latestPostsLoading, posts, postDeletion, onPostOpen, onPostDelete }) => (
   <Section
     // aria-describedby='loading'
     aria-busy={latestPostsLoading}
@@ -22,6 +22,7 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostOpen, onPostDelete
       posts.map(post => (
         <PostCard
           key={post._id}
+          postDeletion={!post.title && postDeletion}
           onOpen={onPostOpen}
           onDelete={onPostDelete}
           {...post}
@@ -35,6 +36,7 @@ const LatestPostsLayout = ({ latestPostsLoading, posts, onPostOpen, onPostDelete
 LatestPostsLayout.propTypes = {
   posts:              latestPostsPropType.isRequired,
   latestPostsLoading: PropTypes.bool.isRequired,
+  postDeletion:       PropTypes.bool.isRequired,
   onPostOpen:         PropTypes.func.isRequired,
   onPostDelete:       PropTypes.func.isRequired,
 };

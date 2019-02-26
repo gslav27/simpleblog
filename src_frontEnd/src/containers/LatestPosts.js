@@ -13,6 +13,7 @@ import {
 import {
   getLatestPosts as getLatestPostsSelector,
   getLatestPostsLoadingStatus,
+  getPostDeletionStatus,
 } from '../store/posts/postsSelectors';
 
 import LatestPostsLayout from '../components/LatestPosts/LatestPostsLayout';
@@ -35,12 +36,13 @@ class LatestPosts extends Component {
   }
   
   render() {
-    const { latestPosts, latestPostsLoading } = this.props;
+    const { latestPosts, latestPostsLoading, postDeletion } = this.props;
 
     return (
       <LatestPostsLayout
         posts={latestPosts}
         latestPostsLoading={latestPostsLoading}
+        postDeletion={postDeletion}
         onPostOpen={this.props.setAvailableCurrentPostData}
         onPostDelete={this.handleDeletePost}
       />
@@ -52,6 +54,7 @@ class LatestPosts extends Component {
 LatestPosts.propTypes = {
   latestPosts:                  latestPostsPropType.isRequired,
   latestPostsLoading:           PropTypes.bool.isRequired,
+  postDeletion:                 PropTypes.bool.isRequired,
   getLatestPosts:               PropTypes.func.isRequired,
   setAvailableCurrentPostData:  PropTypes.func.isRequired,
   deletePost:                   PropTypes.func.isRequired,
@@ -61,6 +64,7 @@ LatestPosts.propTypes = {
 const mapStateToProps = state => ({
   latestPosts:        getLatestPostsSelector(state),
   latestPostsLoading: getLatestPostsLoadingStatus(state),
+  postDeletion:       getPostDeletionStatus(state),
 });
 
 

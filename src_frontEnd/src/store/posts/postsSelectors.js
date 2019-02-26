@@ -7,6 +7,7 @@ export const getCurrentPost = state => state.posts.currentPost;
 
 export const getLatestPostsLoadingStatus = state => state.posts.loading.latestPosts;
 export const getPostLoadingStatus = state => state.posts.loading.post;
+export const getPostDeletionStatus = state => state.posts.loading.deletePost;
 
 
 // SELECTORS FOR REDUCER
