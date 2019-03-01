@@ -16,7 +16,7 @@ import {
   deleteSubComment,
 } from '../store/comments/commentsActionCreators';
 
-import Comment from '../components/Post/components/Comment';
+import Comment from '../components/Post/components/Comments/Comment';
 
 
 

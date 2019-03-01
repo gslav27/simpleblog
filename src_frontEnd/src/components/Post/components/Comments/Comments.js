@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { mainCommentsPropType } from '_Utils_/types/types';
 import Spinner from '_Ui_/Spinner';
-import Comment from '../../../containers/Comment';
+import Comment from '../../../../containers/Comment';
 
 
 const Header = styled.h3`

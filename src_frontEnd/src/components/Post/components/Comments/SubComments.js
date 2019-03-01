@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Comment from '../../../containers/Comment';
+import Comment from '../../../../containers/Comment';
 
 const Container = styled.section`
-  margin: 0px 0px 10px 10px;
+  margin: 0px 0px 10px 0px;
   width: 100%;
   border-left: 2px solid #eee;
 `;

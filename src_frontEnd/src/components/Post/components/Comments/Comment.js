@@ -7,7 +7,8 @@ import { getLocaleDateString } from '_Utils_/getters/getLocaleDateString';
 import DeleteButton from '_Ui_/IconButtonDelete';
 import TextPlaceholder from '_Ui_/TextLoadingPlaceholder';
 import Spinner from '_Ui_/Spinner';
-import AddNewComment from '../../../containers/AddNewComment';
+import VoteButton from '_Ui_/VoteButton';
+import AddNewComment from '../../../../containers/AddNewComment';
 
 import SubComments from './SubComments';
 
@@ -21,10 +22,19 @@ const Container = styled.div`
   min-height: 110px;
   margin: 0px 0px 10px;
   padding: 0px 15px;
+  padding-right:  ${({ type }) => (type === 'main' ? '' : `0px`)};
   border: ${({ type }) => (type === 'main' ? `1px solid #eee` : 'none')};
   border-radius: 3px;
   &:last-of-type {
     margin: 0px;
+  };
+  .tempButtons {
+      visibility: hidden;
+    };
+  &:hover {
+    .tempButtons {
+      visibility: visible;
+    };
   };
 `;
 
@@ -132,7 +142,7 @@ const Comment = ({
                 <Title>{author}</Title>
                 <SubTitle>{getLocaleDateString(date, 'MMDDYYYY-HHMMSS')}</SubTitle>
               </HeaderText>
-              <HeaderButtons>
+              <HeaderButtons className='tempButtons'>
                 <DeleteButton
                   type='button'
                   onClick={onDelete}
@@ -141,7 +151,6 @@ const Comment = ({
               </HeaderButtons>
             </Header>
             <Body>{body}</Body>
-
             <Footer>
               <AddNewComment
                 onSubmit={onAddSubcomment}

@@ -33,7 +33,7 @@ import PostLayout from '../components/Post/PostLayout';
 
 // import Spinner from '_Ui_/Spinner';
 import PostCard from '../components/Post/components/PostCard';
-import Comments from '../components/Post/components/Comments';
+import Comments from '../components/Post/components/Comments/Comments';
 import AddNewComment from './AddNewComment';
 
 
