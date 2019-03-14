@@ -7,7 +7,7 @@ import { getLocaleDateString } from '_Utils_/getters/getLocaleDateString';
 import DeleteButton from '_Ui_/IconButtonDelete';
 import TextPlaceholder from '_Ui_/TextLoadingPlaceholder';
 import Spinner from '_Ui_/Spinner';
-import VoteButton from '_Ui_/VoteButton';
+// import VoteButton from '_Ui_/VoteButton';
 import AddNewComment from '../../../../containers/AddNewComment';
 
 import SubComments from './SubComments';
