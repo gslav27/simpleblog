@@ -8,7 +8,7 @@ import { routes } from '_Utils_/constants/constants';
 import { getLocaleDateString } from '_Utils_/getters/getLocaleDateString';
 import TextPlaceholder from '_Ui_/TextLoadingPlaceholder';
 import Spinner from '_Ui_/Spinner';
-import DeletePostButton from './DeletePostButton';
+import DeleteButton from '_Ui_/IconButtonDelete';
 
 
 
@@ -123,28 +123,32 @@ export const PostCardPlaceholder = ({ postDeletion }) => (
 const PostCard = ({ postDeletion, onOpen, onDelete, ...props }) => (
   <Container loading={!props.title}>
     {
-    !props.title
-      ? <PostCardPlaceholder postDeletion={postDeletion} />
-      : (
-        <>
-          <StyledLink
-            to={`${process.env.PUBLIC_URL}${routes.posts}/${props.id}`}
-            title='read article'
-            onClick={() => onOpen(props)}
-          />
-          <Article title='read article'>
-            <Title>{props.title}</Title>
-            <Description>{props.description}</Description>
-            <Footer>
-              <FooterText>{props.author}</FooterText>
-              <FooterText>{getLocaleDateString(props.date)}</FooterText>
-            </Footer>
-          </Article>
-          <TopRightContainer>
-            <DeletePostButton onClick={() => onDelete(props._id)} />
-          </TopRightContainer>
-        </>
-      )
+      !props.title
+        ? <PostCardPlaceholder postDeletion={postDeletion} />
+        : (
+          <>
+            <StyledLink
+              to={`${process.env.PUBLIC_URL}${routes.posts}/${props.id}`}
+              title='read article'
+              onClick={() => onOpen(props)}
+            />
+            <Article title='read article'>
+              <Title>{props.title}</Title>
+              <Description>{props.description}</Description>
+              <Footer>
+                <FooterText>{props.author}</FooterText>
+                <FooterText>{getLocaleDateString(props.date)}</FooterText>
+              </Footer>
+            </Article>
+            <TopRightContainer>
+              <DeleteButton
+                type='button'
+                title='delete Post'
+                onClick={() => onDelete(props._id)}
+              />
+            </TopRightContainer>
+          </>
+        )
   }
   </Container>
 );

@@ -18,7 +18,7 @@ const DeleteButton = ({ type, title, onClick, userOver, handlers, ...restProps }
   >
     {
       userOver
-        ? <Delete fontSize='small' nativeColor='gainsboro' />
+        ? <Delete fontSize='small' nativeColor='grey' />
         : <DeleteOutline fontSize='small' nativeColor='gainsboro' />
     }
   </IconButton>
