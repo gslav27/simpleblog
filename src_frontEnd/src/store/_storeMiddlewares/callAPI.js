@@ -5,11 +5,13 @@ export default ({ dispatch }) => next => async (action) => {
   if (!callAPI) return next(action);
 
   dispatch({ ...rest, type: type + START });
+  const { payload: initialPayload } = rest;
 
   try {
     const response = await fetch(callAPI, options);
     const responseJSON = await response.json();
-    const { payload: initialPayload } = rest;
+    if (!response.ok) throw new Error(responseJSON.message);
+
     dispatch({
       ...rest,
       initialPayload,
@@ -18,6 +20,12 @@ export default ({ dispatch }) => next => async (action) => {
     });
   } catch (error) {
     console.log(`There has been a problem with ${type} process: ${error.message}`);
-    dispatch({ ...rest, type: type + FAIL, error });
+    
+    dispatch({
+      ...rest,
+      initialPayload,
+      type: type + FAIL,
+      payload: error.message,
+    });
   }
 };

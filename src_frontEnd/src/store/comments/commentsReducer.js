@@ -202,9 +202,9 @@ export default function (state = initialState, { type, payload, initialPayload }
         ...state,
         all: {
           ...state.all,
-          [payload.parentCommentId]: {
-            ...state.all[payload.parentCommentId],
-            subComments: state.all[payload.parentCommentId].subComments.slice(1),
+          [initialPayload.parentCommentId]: {
+            ...state.all[initialPayload.parentCommentId],
+            subComments: state.all[initialPayload.parentCommentId].subComments.slice(1),
           },
         },
         loading: {
@@ -215,9 +215,9 @@ export default function (state = initialState, { type, payload, initialPayload }
     case (types.DELETE_COMMENT + FAIL):
       return {
         ...state,
-        main: state.main.filter(_id => _id !== payload._id),
-        all: getAllWithoutUnusedComments(state.all, payload._id),
-        allQty: state.allQty - (1 + state.all[payload._id].allSubCommentsQty),
+        main: state.main.filter(_id => _id !== initialPayload._id),
+        all: getAllWithoutUnusedComments(state.all, initialPayload._id),
+        allQty: state.allQty - (1 + state.all[initialPayload._id].allSubCommentsQty),
         loading: {
           ...state.loading,
           deleteComment: false,
@@ -227,13 +227,13 @@ export default function (state = initialState, { type, payload, initialPayload }
       return {
         ...state,
         all: {
-          ...getAllWithoutUnusedComments(state.all, payload._id),
+          ...getAllWithoutUnusedComments(state.all, initialPayload._id),
           [initialPayload.parentCommentId]: {
             ...state.all[initialPayload.parentCommentId],
-            subComments: state.all[initialPayload.parentCommentId].subComments.filter(_id => _id !== payload.parentCommentId),
+            subComments: state.all[initialPayload.parentCommentId].subComments.filter(_id => _id !== initialPayload._id),
           },
         },
-        allQty: state.allQty - (1 + state.all[payload._id].allSubCommentsQty),
+        allQty: state.allQty - (1 + state.all[initialPayload._id].allSubCommentsQty),
         loading: {
           ...state.loading,
           deleteComment: false,
